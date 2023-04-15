@@ -14,6 +14,7 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
         options.UseSqlServer(connection));
 
 builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<ITeamService, TeamService>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -47,6 +48,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseCors(MyAllowSpecificOrigins);
 
 if (app.Environment.IsDevelopment())
 {
