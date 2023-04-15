@@ -7,5 +7,6 @@ namespace Backend.API.Controllers
     [ApiController]
     public class ProfileController : ControllerBase
     {
+        
     }
 }
