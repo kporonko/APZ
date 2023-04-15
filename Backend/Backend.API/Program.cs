@@ -1,4 +1,4 @@
-using backend.Infrastructure.Data;
+using Backend.Infrastructure.Data;
 using Backend.Core.Interfaces;
 using Backend.Core.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

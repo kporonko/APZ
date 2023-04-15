@@ -3,7 +3,7 @@ using Backend.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace backend.Infrastructure.Data
+namespace Backend.Infrastructure.Data
 {
     public class ApplicationContext : DbContext
     {

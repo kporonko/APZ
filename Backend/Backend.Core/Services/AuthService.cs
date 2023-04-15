@@ -1,4 +1,4 @@
-﻿using backend.Infrastructure.Data;
+﻿using Backend.Infrastructure.Data;
 using Backend.Core.Extensions;
 using Backend.Core.Interfaces;
 using Backend.Core.Models;
@@ -59,6 +59,7 @@ namespace Backend.Core.Services
             user.Password = registerUser.Password.ConvertPasswordToHash();
             return user;
         }
+        
         private void AddManagerToDb(ManagerProfile user)
         {
             _context.Managers.Add(user);
