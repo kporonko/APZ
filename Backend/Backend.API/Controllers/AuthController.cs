@@ -5,7 +5,7 @@ namespace Backend.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProfileController : ControllerBase
+    public class AuthController : ControllerBase
     {
         
     }
