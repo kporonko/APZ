@@ -13,7 +13,7 @@ namespace Backend.Infrastructure.Models
         public string Name { get; set; }
         public string? Image { get; set; }
         public string Description { get; set; }
-        public int CoachId { get; set; }
+        public int ManagerId { get; set; }
         public ManagerProfile ManagerProfile { get; set; }
         public List<Player> Players { get; set; }
     }

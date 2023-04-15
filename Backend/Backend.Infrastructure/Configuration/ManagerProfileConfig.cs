@@ -1,20 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Backend.Infrastructure.Models;
 
 namespace Backend.Infrastructure.Configuration
 {
     public class ManagerProfileConfig : IEntityTypeConfiguration<ManagerProfile>
     {
-        public void Configure(EntityTypeBuilder<Coach> builder)
+        public void Configure(EntityTypeBuilder<ManagerProfile> builder)
         {
             builder
-                .ToTable("Coach")
+                .ToTable("ManagerProfile")
                 .HasKey(t => t.Id);
             builder
                 .Property(t => t.Id)
@@ -40,16 +35,6 @@ namespace Backend.Infrastructure.Configuration
                 .HasColumnName("Password")
                 .HasColumnType("varchar(max)");
             builder
-                .Property(t => t.Avatar)
-                .IsRequired(true)
-                .HasColumnName("Avatar")
-                .HasColumnType("varchar(max)");
-            builder
-                .Property(t => t.BirthDate)
-                .IsRequired(true)
-                .HasColumnName("BirthDate")
-                .HasColumnType("date");
-            builder
                 .Property(t => t.Login)
                 .IsRequired(true)
                 .HasColumnName("Login")
@@ -57,3 +42,4 @@ namespace Backend.Infrastructure.Configuration
                 .HasMaxLength(100);
         }
     }
+}

@@ -14,7 +14,7 @@ namespace Backend.Infrastructure.Configuration
         public void Configure(EntityTypeBuilder<Game> builder)
         {
             builder
-                .ToTable("Training")
+                .ToTable("Game")
                 .HasKey(t => t.Id);
             builder
                 .Property(t => t.Id)

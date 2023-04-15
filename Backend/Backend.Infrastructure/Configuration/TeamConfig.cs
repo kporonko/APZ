@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Infrastructure.Configuration
 {
-    public class TeamConfiguration : IEntityTypeConfiguration<Team>
+    public class TeamConfig : IEntityTypeConfiguration<Team>
     {
         public void Configure(EntityTypeBuilder<Team> builder)
         {
