@@ -104,6 +104,34 @@ namespace Backend.Core.Services
 
         }
 
+        public async Task<PlayerResponse?> GetPlayer(int playerId)
+        {
+            var player = await _context.Players.FirstOrDefaultAsync(x => x.Id == playerId);
+
+            if (player == null)
+                return null;
+
+            _context.Entry(player).Collection(x => x.Games).Load();
+
+            return new PlayerResponse
+            {
+                Id = player.Id,
+                LastName = player.LastName,
+                FirstName = player.FirstName,
+                Avatar = player.Avatar,
+                BirthDate = player.BirthDate,
+                Games = player.Games.Select(x => new GameData
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    IsPlayerAbsent = x.IsPlayerAbsent,
+                    GameStartDate = x.GameStartDate,
+                    GameEndDate = x.GameEndDate,
+                    HeartBeats = x.HeartBeats
+                }).ToList()
+            };
+        }
+        
         public async Task<List<PlayerShortResponse>?> GetPlayers(int managerId)
         {
             var team = await _context.Teams.Include(x => x.Players).ThenInclude(x => x.Games).FirstOrDefaultAsync(x => x.ManagerId == managerId);

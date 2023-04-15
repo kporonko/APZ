@@ -128,7 +128,18 @@ namespace Backend.API.Controllers
 
             return NotFound();
         }
-        
+
+        [Authorize]
+        [HttpGet("player")]
+        public async Task<ActionResult<PlayerResponse>> GetPlayer()
+        {
+            var userFromJwt = GetCurrentUser();
+            var response = await _teamService.GetPlayer(userFromJwt.Id);
+            if (response is not null)
+                return Ok(response);
+
+            return NotFound();
+        }
         /// <summary>
         /// Gets current user by authorizing jwt token.
         /// </summary>

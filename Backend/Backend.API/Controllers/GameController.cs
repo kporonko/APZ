@@ -1,9 +1,11 @@
 ﻿using Backend.Core.Interfaces;
 using Backend.Core.Models;
+using Backend.Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Security.Claims;
 
 namespace Backend.API.Controllers
 {
@@ -26,6 +28,18 @@ namespace Backend.API.Controllers
         public async Task<ActionResult<GameBaseData>> GetGames(int playerId)
         {
             var response = await _gameService.GetGames(playerId);
+            if (response is not null)
+                return Ok(response);
+
+            return NotFound();
+        }
+
+        [Authorize]
+        [HttpGet("games/player")]
+        public async Task<ActionResult<GameBaseData>> GetGames()
+        {
+            var userFromJwt = GetCurrentUser();
+            var response = await _gameService.GetGames(userFromJwt.Id);
             if (response is not null)
                 return Ok(response);
 
@@ -60,6 +74,29 @@ namespace Backend.API.Controllers
                 return Ok(res);
 
             return BadRequest();
+        }
+        
+        /// <summary>
+        /// Gets current user by authorizing jwt token.
+        /// </summary>
+        /// <returns></returns>
+        private Player? GetCurrentUser()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            
+            if (identity is not null)
+            {
+                var userClaims = identity.Claims;
+
+                return new Player
+                {
+                    Login = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
+                    FirstName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value,
+                    LastName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Surname)?.Value,
+                    Id = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Sid)?.Value),
+                };
+            }
+            return null;
         }
     }
 }
