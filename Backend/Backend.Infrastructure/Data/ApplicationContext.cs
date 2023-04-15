@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Backend.Infrastructure.Configuration;
+using Backend.Infrastructure.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace backend.Infrastructure.Data
@@ -9,11 +11,15 @@ namespace backend.Infrastructure.Data
             : base(options)
         {
         }
+        public DbSet<ManagerProfile> Managers { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<HeartBeat> HeartBeats { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-           
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
