@@ -22,10 +22,9 @@ namespace Backend.API.Controllers
             _config = config;
         }
 
-
         [Authorize]
         [HttpGet("games/player/{playerId}")]
-        public async Task<ActionResult<GameBaseData>> GetGames(int playerId)
+        public async Task<ActionResult<List<GameBaseData>>> GetGames(int playerId)
         {
             var response = await _gameService.GetGames(playerId);
             if (response is not null)
@@ -36,7 +35,7 @@ namespace Backend.API.Controllers
 
         [Authorize]
         [HttpGet("games/player")]
-        public async Task<ActionResult<GameBaseData>> GetGames()
+        public async Task<ActionResult<List<GameBaseData>>> GetGames()
         {
             var userFromJwt = GetCurrentUser();
             var response = await _gameService.GetGames(userFromJwt.Id);
@@ -48,7 +47,7 @@ namespace Backend.API.Controllers
 
         [Authorize]
         [HttpPost("game")]
-        public async Task<IActionResult> CreateGame(GameCreateRequest game)
+        public async Task<ActionResult<GameCreateResponse>> CreateGame(GameCreateRequest game)
         {
             var result = await _gameService.CreateGame(game);
             if (result is not null)
@@ -62,7 +61,11 @@ namespace Backend.API.Controllers
         public async Task<IActionResult> AddHeartBeat(HeartBeatAddRequest request)
         {
             var res = await _gameService.AddHeartBeat(request);
-            return Ok("Game is deleted");
+            if (res == HttpStatusCode.OK)
+            {
+                return Ok("HeartBeat is added");
+            }
+            return BadRequest();
         }
 
         [Authorize]

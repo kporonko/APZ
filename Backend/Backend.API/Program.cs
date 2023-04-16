@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<ITeamService, TeamService>();
+builder.Services.AddTransient<IGameService, GameService>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

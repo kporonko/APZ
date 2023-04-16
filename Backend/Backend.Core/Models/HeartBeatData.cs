@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Backend.Core.Models
 {
-    public class HeartBeatAddRequest
+    public class HeartBeatData
     {
+        public int Id { get; set; }
         public DateTime HeartBeatDate { get; set; }
         public int Value { get; set; }
-        public int GameId { get; set; }
     }
 }

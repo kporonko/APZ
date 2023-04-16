@@ -1,4 +1,5 @@
-﻿using Backend.Core.Interfaces;
+﻿using Backend.Core.Extensions;
+using Backend.Core.Interfaces;
 using Backend.Core.Models;
 using Backend.Infrastructure.Data;
 using Backend.Infrastructure.Models;
@@ -29,7 +30,9 @@ namespace Backend.Core.Services
                 Avatar = playerAdd.Avatar,
                 Team = coach.Team,
                 TeamId = coach.Team.Id,
-                BirthDate = playerAdd.BirthDate
+                BirthDate = playerAdd.BirthDate,
+                Login = playerAdd.Login,
+                Password = playerAdd.Password.ConvertPasswordToHash()
             };
 
             await _context.Players.AddAsync(player);
@@ -98,7 +101,11 @@ namespace Backend.Core.Services
                     IsPlayerAbsent = x.IsPlayerAbsent,
                     GameStartDate = x.GameStartDate,
                     GameEndDate = x.GameEndDate,
-                    HeartBeats = x.HeartBeats
+                    HeartBeats = x.HeartBeats.Select(x => new HeartBeatData
+                    {
+                        Value = x.Value,
+                        HeartBeatDate = x.HeartBeatDate
+                    }).ToList(),
                 }).ToList()
             };
 
@@ -127,7 +134,11 @@ namespace Backend.Core.Services
                     IsPlayerAbsent = x.IsPlayerAbsent,
                     GameStartDate = x.GameStartDate,
                     GameEndDate = x.GameEndDate,
-                    HeartBeats = x.HeartBeats
+                    HeartBeats = x.HeartBeats.Select(x => new HeartBeatData
+                    {
+                        Value = x.Value,
+                        HeartBeatDate = x.HeartBeatDate
+                    }).ToList(),
                 }).ToList()
             };
         }

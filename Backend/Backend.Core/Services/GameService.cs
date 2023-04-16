@@ -76,18 +76,25 @@ namespace Backend.Core.Services
 
         public async Task<GameData> GetGameStats(int gameId)
         {
-            var game = await _context.Games.FirstOrDefaultAsync(x => x.Id == gameId);
+            var game = await _context.Games.Include(x => x.Player).Include(x => x.HeartBeats).FirstOrDefaultAsync(x => x.Id == gameId);
             if (game == null)
                 return null;
 
-            return new GameData
+            var gameData = new GameData
             {
                 Id = game.Id,
                 Description = game.Description,
                 GameStartDate = game.GameStartDate,
                 GameEndDate = game.GameEndDate,
-                HeartBeats = game.HeartBeats
+                HeartBeats = game.HeartBeats.Select(x => new HeartBeatData
+                {
+                    Value = x.Value,
+                    HeartBeatDate = x.HeartBeatDate
+                }).ToList(),
+                PlayerId = game.Player.Id
             };
+
+            return gameData;
         }
     }
 }

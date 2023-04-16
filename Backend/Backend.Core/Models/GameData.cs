@@ -14,6 +14,7 @@ namespace Backend.Core.Models
         public DateTime GameEndDate { get; set; }
         public bool IsPlayerAbsent { get; set; }
         public string Description { get; set; }
-        public List<HeartBeat> HeartBeats { get; set; }
+        public List<HeartBeatData> HeartBeats { get; set; }
+        public int PlayerId { get; set; }
     }
 }
