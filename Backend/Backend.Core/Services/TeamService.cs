@@ -32,7 +32,8 @@ namespace Backend.Core.Services
                 TeamId = coach.Team.Id,
                 BirthDate = playerAdd.BirthDate,
                 Login = playerAdd.Login,
-                Password = playerAdd.Password.ConvertPasswordToHash()
+                Password = playerAdd.Password.ConvertPasswordToHash(),
+                Role = Role.Player
             };
 
             await _context.Players.AddAsync(player);

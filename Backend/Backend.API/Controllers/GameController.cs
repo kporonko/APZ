@@ -22,7 +22,7 @@ namespace Backend.API.Controllers
             _config = config;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpGet("games/player/{playerId}")]
         public async Task<ActionResult<List<GameBaseData>>> GetGames(int playerId)
         {
@@ -33,7 +33,7 @@ namespace Backend.API.Controllers
             return NotFound();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Player")]
         [HttpGet("games/player")]
         public async Task<ActionResult<List<GameBaseData>>> GetGames()
         {

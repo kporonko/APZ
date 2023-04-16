@@ -53,7 +53,8 @@ namespace Backend.Core.Services
                 FirstName = registerUser.FirstName,
                 LastName = registerUser.LastName,
                 Login = registerUser.Login,
-                Password = registerUser.Password.ConvertPasswordToHash()
+                Password = registerUser.Password.ConvertPasswordToHash(),
+                Role = Role.Manager
             };
 
             user.Password = registerUser.Password.ConvertPasswordToHash();

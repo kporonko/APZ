@@ -22,7 +22,8 @@ namespace Backend.Core.Extensions
                 new Claim(ClaimTypes.Email, manager.Login),
                 new Claim(ClaimTypes.GivenName, manager.FirstName),
                 new Claim(ClaimTypes.Surname, manager.LastName),
-                new Claim(ClaimTypes.Sid, manager.Id.ToString())
+                new Claim(ClaimTypes.Sid, manager.Id.ToString()),
+                new Claim(ClaimTypes.Role, manager.Role.ToString()),
             };
 
             var token = new JwtSecurityToken(
@@ -46,7 +47,8 @@ namespace Backend.Core.Extensions
                 new Claim(ClaimTypes.Email, manager.Login),
                 new Claim(ClaimTypes.GivenName, manager.FirstName),
                 new Claim(ClaimTypes.Surname, manager.LastName),
-                new Claim(ClaimTypes.Sid, manager.Id.ToString())
+                new Claim(ClaimTypes.Role, manager.Role.ToString()),
+                new Claim(ClaimTypes.Sid, manager.Id.ToString()),
             };
 
             var token = new JwtSecurityToken(

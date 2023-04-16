@@ -21,7 +21,7 @@ namespace Backend.API.Controllers
             _config = config;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpGet("team")]
         public async Task<ActionResult<TeamBaseResponse>> GetTeam()
         {
@@ -33,7 +33,7 @@ namespace Backend.API.Controllers
             return NotFound();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpPost("team")]
         public async Task<IActionResult> CreateTeam(CreateTeamRequest team)
         {
@@ -45,7 +45,7 @@ namespace Backend.API.Controllers
             return Ok("Team is created");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpDelete("team")]
         public async Task<IActionResult> DeleteTeam()
         {
@@ -57,7 +57,7 @@ namespace Backend.API.Controllers
             return Ok("Team is deleted");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpPut("team")]
         public async Task<IActionResult> UpdateTeam(CreateTeamRequest teamUpdate)
         {
@@ -69,7 +69,7 @@ namespace Backend.API.Controllers
             return Ok("Team is updated");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpPost("player")]
         public async Task<IActionResult> AddPlayerToTeam(PlayerAddRequest playerAdd)
         {
@@ -81,7 +81,7 @@ namespace Backend.API.Controllers
             return Ok("Player is added");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpDelete("player")]
         public async Task<IActionResult> DeletePlayerFromTeam(PlayerDeleteRequest playerDeleteRequest)
         {
@@ -93,7 +93,7 @@ namespace Backend.API.Controllers
             return Ok("Player is deleted");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpPut("player")]
         public async Task<IActionResult> UpdatePlayer(PlayerUpdateRequest playerUpdate)
         {
@@ -105,7 +105,7 @@ namespace Backend.API.Controllers
             return Ok("Player is updated");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpGet("players")]
         public async Task<ActionResult<List<PlayerShortResponse>>> GetPlayers()
         {
@@ -117,7 +117,7 @@ namespace Backend.API.Controllers
             return NotFound();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpGet("player/{id}")]
         public async Task<ActionResult<PlayerResponse>> GetPlayer([FromRoute] int id)
         {
@@ -129,7 +129,7 @@ namespace Backend.API.Controllers
             return NotFound();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Player")]
         [HttpGet("player")]
         public async Task<ActionResult<PlayerResponse>> GetPlayer()
         {
@@ -140,6 +140,7 @@ namespace Backend.API.Controllers
 
             return NotFound();
         }
+        
         /// <summary>
         /// Gets current user by authorizing jwt token.
         /// </summary>

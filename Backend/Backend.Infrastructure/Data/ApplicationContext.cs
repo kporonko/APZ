@@ -1,7 +1,10 @@
 ﻿using Backend.Infrastructure.Configuration;
 using Backend.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Reflection;
 
 namespace Backend.Infrastructure.Data
 {
@@ -25,6 +28,15 @@ namespace Backend.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new GameConfig());
             modelBuilder.ApplyConfiguration(new HeartBeatConfig());
 
+            var converter = new EnumToStringConverter<Role>();
+
+            modelBuilder.Entity<ManagerProfile>()
+                .Property(p => p.Role)
+                .HasConversion(converter);
+            modelBuilder.Entity<Player>()
+                .Property(p => p.Role)
+                .HasConversion(converter);
+            
             modelBuilder.Entity<ManagerProfile>()
                 .HasOne(c => c.Team)
                 .WithOne(t => t.ManagerProfile)
