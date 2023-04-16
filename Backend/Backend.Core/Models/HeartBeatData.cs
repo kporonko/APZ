@@ -8,7 +8,6 @@ namespace Backend.Core.Models
 {
     public class HeartBeatData
     {
-        public int Id { get; set; }
         public DateTime HeartBeatDate { get; set; }
         public int Value { get; set; }
     }

@@ -26,12 +26,12 @@ namespace Backend.Infrastructure.Configuration
                 .Property(t => t.GameStartDate)
                 .IsRequired()
                 .HasColumnName("GameStartDate")
-                .HasColumnType("date");
+                .HasColumnType("datetime");
             builder
                 .Property(t => t.GameEndDate)
                 .IsRequired()
                 .HasColumnName("GameEndDate")
-                .HasColumnType("date");
+                .HasColumnType("datetime");
             builder
                 .Property(t => t.IsPlayerAbsent)
                 .IsRequired()

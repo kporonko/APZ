@@ -26,7 +26,7 @@ namespace Backend.Infrastructure.Configuration
                 .Property(t => t.HeartBeatDate)
                 .IsRequired()
                 .HasColumnName("HeartBeatDate")
-                .HasColumnType("date");
+                .HasColumnType("datetime");
             builder
                 .Property(t => t.Value)
                 .IsRequired()
