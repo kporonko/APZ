@@ -61,21 +61,63 @@ namespace Backend.Core.Services
             return response;
         }
 
-        public async Task<List<GameBaseData>> GetGames(int playerId)
+        public async Task<GameBaseResponse> GetGames(int playerId)
         {
             var player = await _context.Players.Include(x => x.Games).ThenInclude(x => x.HeartBeats).FirstOrDefaultAsync(x => x.Id == playerId);
             if (player == null)
                 return null;
 
-            var gamesData = player.Games.Select(x => new GameBaseData
+            (int badAverageInRowCount, int badRangeInRowCount) = GetGamesInTheRowStats(player);
+            var gamesData = new GameBaseResponse
             {
-                Id = x.Id,
-                GameStartDate = x.GameStartDate,
-                GameEndDate = x.GameEndDate,
-                AvgHeartBeat = (int)x.HeartBeats.Select(x => x.Value).Average()
-            }).ToList();
-
+                BadAverageInRowCount = 0,
+                BadRangeInRowCount = 0,
+                Games = player.Games.Select(x => new GameBaseData
+                {
+                    Id = x.Id,
+                    GameStartDate = x.GameStartDate,
+                    GameEndDate = x.GameEndDate,
+                    AvgHeartBeat = (int)x.HeartBeats.Select(x => x.Value).Average()
+                }).ToList()
+            };
             return gamesData;
+        }
+
+        private (int badAverageInRowCount, int badRangeInRowCount) GetGamesInTheRowStats(Player player)
+        {
+            int badAverageInRowCount = 0;
+            int badRangeInRowCount = 0;
+
+            var age = GetAge(player.BirthDate);
+            var ageSection = GetAgeSection(age);
+
+            var minimumBeatForAge = GetMinimumBeatForAge(ageSection);
+            var increaseCoef = GetIncreaseCoef(ageSection);
+            var maxIncrease = GetMaxIncrease();
+            var maxDeviation = GetMaxDeviation();
+
+            var games = player.Games.OrderBy(x => x.GameStartDate).ToList();
+            foreach (var game in games)
+            {
+                var avgValue = game.HeartBeats.Select(x => x.Value).Average();
+                var isAvgGood = avgValue < minimumBeatForAge + maxDeviation * increaseCoef;
+
+                if (!isAvgGood)
+                {
+                    badAverageInRowCount++;
+                }
+
+                var minimum = game.HeartBeats.Select(x => x.Value).Min();
+                var maximum = game.HeartBeats.Select(x => x.Value).Max();
+                var isRangeGood = maximum - minimum < maxIncrease * increaseCoef;
+
+                if (!isRangeGood)
+                {
+                    badRangeInRowCount++;
+                }
+            }
+
+            return (badAverageInRowCount, badRangeInRowCount);
         }
 
         public async Task<GameData> GetGameStats(int gameId)

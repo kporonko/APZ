@@ -14,6 +14,6 @@ namespace Backend.Core.Interfaces
         public Task<HttpStatusCode> AddHeartBeat(HeartBeatAddRequest game);
         public Task<GameData> GetGameStats(int gameId);
         public Task<GameAnalysisData> GetGameAnalysisStats(int gameId);
-        public Task<List<GameBaseData>> GetGames(int playerId);
+        public Task<GameBaseResponse> GetGames(int playerId);
     }
 }
