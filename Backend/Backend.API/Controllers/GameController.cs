@@ -45,7 +45,7 @@ namespace Backend.API.Controllers
             return NotFound();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpPost("game")]
         public async Task<ActionResult<GameCreateResponse>> CreateGame(GameCreateRequest game)
         {
@@ -56,7 +56,7 @@ namespace Backend.API.Controllers
             return BadRequest();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpPost("heartbeat")]
         public async Task<IActionResult> AddHeartBeat(HeartBeatAddRequest request)
         {
@@ -69,10 +69,21 @@ namespace Backend.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("game/{id}")]
+        [HttpGet("game/current/{id}")]
         public async Task<ActionResult<GameData>> GetGameStats(int id)
         {
             var res = await _gameService.GetGameStats(id);
+            if (res is not null)
+                return Ok(res);
+
+            return BadRequest();
+        }
+
+        [Authorize]
+        [HttpGet("game/{id}")]
+        public async Task<ActionResult<GameAnalysisData>> GetGameStatsAnalysis(int id)
+        {
+            var res = await _gameService.GetGameAnalysisStats(id);
             if (res is not null)
                 return Ok(res);
 

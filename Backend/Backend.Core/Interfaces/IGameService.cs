@@ -13,6 +13,7 @@ namespace Backend.Core.Interfaces
         public Task<GameCreateResponse> CreateGame(GameCreateRequest game);
         public Task<HttpStatusCode> AddHeartBeat(HeartBeatAddRequest game);
         public Task<GameData> GetGameStats(int gameId);
+        public Task<GameAnalysisData> GetGameAnalysisStats(int gameId);
         public Task<List<GameBaseData>> GetGames(int playerId);
     }
 }

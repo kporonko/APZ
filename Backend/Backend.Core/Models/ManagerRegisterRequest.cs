@@ -11,12 +11,14 @@ namespace Backend.Core.Models
     public class ManagerRegisterRequest
     {
         [Required]
+        [DataType(DataType.EmailAddress)]
         public string Login { get; set; }
         [Required]
         public string LastName { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
+        [MinLength(8)]
         public string Password { get; set; }
     }
 }

@@ -86,7 +86,7 @@ namespace Backend.Core.Services
             if (player == null)
                 return null;
             
-            _context.Entry(player).Collection(x => x.Games).Load();
+            _context.Entry(player).Collection(x => x.Games).Query().Include(x => x.HeartBeats).Load();
 
             return new PlayerResponse
             {
@@ -119,7 +119,7 @@ namespace Backend.Core.Services
             if (player == null)
                 return null;
 
-            _context.Entry(player).Collection(x => x.Games).Load();
+            _context.Entry(player).Collection(x => x.Games).Query().Include(x => x.HeartBeats).Load();
 
             return new PlayerResponse
             {
@@ -146,7 +146,7 @@ namespace Backend.Core.Services
         
         public async Task<List<PlayerShortResponse>?> GetPlayers(int managerId)
         {
-            var team = await _context.Teams.Include(x => x.Players).ThenInclude(x => x.Games).FirstOrDefaultAsync(x => x.ManagerId == managerId);
+            var team = await _context.Teams.Include(x => x.Players).ThenInclude(x => x.Games).ThenInclude(x => x.HeartBeats).FirstOrDefaultAsync(x => x.ManagerId == managerId);
             if (team == null)
                 return null;
 
@@ -156,10 +156,25 @@ namespace Backend.Core.Services
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 Avatar = x.Avatar,
-                AvgHeartBeatLastGame = x.Games.Count > 0 ? (int)x.Games.Last().HeartBeats.Select(x => x.Value).Average() : null
+                AvgHeartBeatLastGame = GetAvgHeartBeatLastGame(x)
             }).ToList();
 
             return players;
+        }
+
+        private int? GetAvgHeartBeatLastGame(Player x)
+        {
+            if (x.Games == null || x.Games.Count == 0)
+            {
+                return null;
+            }
+
+            var game = x.Games.Last();
+            var heartBeats = game.HeartBeats;
+            var values = heartBeats.Select(x => x.Value);
+            var average = values.Average();
+            int? result = (int)average;
+            return result;
         }
 
         public async Task<TeamBaseResponse> GetTeam(int managerId)
@@ -180,8 +195,26 @@ namespace Backend.Core.Services
         public async Task<HttpStatusCode> RemovePlayerFromTeam(int managerId, int playerId)
         {
             var player = await _context.Players.FirstOrDefaultAsync(x => x.Id == playerId && x.Team.ManagerId == managerId);
-            if (player == null)
-                return HttpStatusCode.NotFound;
+            var games = _context.Games.Where(x => x.PlayerId == player.Id).ToList();
+            if (games.Any())
+            {
+                foreach (var game in games)
+                {
+                    var heartBeats = _context.HeartBeats.Where(x => x.GameId == game.Id);
+                    _context.HeartBeats.RemoveRange(heartBeats);
+                }
+            }
+            _context.Games.RemoveRange(games);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
             _context.Players.Remove(player);
             await _context.SaveChangesAsync();

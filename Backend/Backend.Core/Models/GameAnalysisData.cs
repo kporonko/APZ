@@ -1,5 +1,4 @@
-﻿using Backend.Infrastructure.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Backend.Core.Models
 {
-    public class GameData
+    public class GameAnalysisData
     {
         public int Id { get; set; }
         public DateTime GameStartDate { get; set; }
@@ -16,6 +15,6 @@ namespace Backend.Core.Models
         public string Description { get; set; }
         public List<HeartBeatData> HeartBeats { get; set; }
         public int PlayerId { get; set; }
-        public bool IsLastHeartBeatOk { get; set; }
+        public AnalysisData Analysis { get; set; }
     }
 }
