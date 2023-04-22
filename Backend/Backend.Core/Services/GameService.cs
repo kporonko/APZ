@@ -55,7 +55,7 @@ namespace Backend.Core.Services
             var gameGet = await _context.Games.FirstOrDefaultAsync(x => x.GameStartDate == gameRequest.GameStartDate);
             var response = new GameCreateResponse
             {
-                Id = gameGet.Id,
+                Id = game.Id,
             };
             
             return response;
