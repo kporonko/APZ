@@ -29,7 +29,7 @@ namespace Backend.Infrastructure.Configuration
                 .HasColumnType("datetime");
             builder
                 .Property(t => t.GameEndDate)
-                .IsRequired()
+                .IsRequired(false)
                 .HasColumnName("GameEndDate")
                 .HasColumnType("datetime");
             builder

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Numerics;
@@ -45,7 +46,6 @@ namespace Backend.Core.Services
             {
                 Description = gameRequest.Description,
                 GameStartDate = gameRequest.GameStartDate,
-                GameEndDate = gameRequest.GameEndDate,
                 PlayerId = gameRequest.PlayerId
             };
 
@@ -188,7 +188,7 @@ namespace Backend.Core.Services
             };
         }
 
-        private (bool isAvgGood, bool isRangeGood, int timesLower, int timesHigher) GetAnalysisOfGame(Game game, int minHeartBeatForAge, int increaseCoef, int maxIncrease, int maxDeviation)
+        private (bool isAvgGood, bool isRangeGood, int timesLower, int timesHigher) GetAnalysisOfGame(Game game, int minHeartBeatForAge, double increaseCoef, int maxIncrease, int maxDeviation)
         {
             var avgValue = game.HeartBeats.Select(x => x.Value).Average();
             var isAvgGood = avgValue < minHeartBeatForAge + maxDeviation * increaseCoef;
@@ -228,10 +228,11 @@ namespace Backend.Core.Services
         {
             return Convert.ToInt32(_configuration.GetSection($"HeartBeat:Minimum:{ageSection}").Value);
         }
-
-        private int GetIncreaseCoef(string ageSection)
+        
+        private double GetIncreaseCoef(string ageSection)
         {
-            return Convert.ToInt32(_configuration.GetSection($"HeartBeat:IncreasingCoef:{ageSection}").Value);
+            var a = _configuration.GetSection($"HeartBeat:IncreasingCoef:{ageSection}").Value;
+            return Convert.ToDouble(_configuration.GetSection($"HeartBeat:IncreasingCoef:{ageSection}").Value, CultureInfo.InvariantCulture);
         }
 
         private int GetMaxIncrease()

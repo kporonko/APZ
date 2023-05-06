@@ -10,7 +10,7 @@ namespace Backend.Core.Models
     {
         public int Id { get; set; }
         public DateTime GameStartDate { get; set; }
-        public DateTime GameEndDate { get; set; }
+        public DateTime? GameEndDate { get; set; }
         public bool IsPlayerAbsent { get; set; }
         public string Description { get; set; }
         public List<HeartBeatData> HeartBeats { get; set; }

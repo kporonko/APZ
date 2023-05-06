@@ -56,7 +56,6 @@ namespace Backend.API.Controllers
             return BadRequest();
         }
 
-        [Authorize(Roles = "Manager")]
         [HttpPost("heartbeat")]
         public async Task<IActionResult> AddHeartBeat(HeartBeatAddRequest request)
         {

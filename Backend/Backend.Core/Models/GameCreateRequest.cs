@@ -13,9 +13,6 @@ namespace Backend.Core.Models
         public DateTime GameStartDate { get; set; }
 
         [Required]
-        public DateTime GameEndDate { get; set; }
-
-        [Required]
         public bool IsPlayerAbsent { get; set; }
 
         [Required]
