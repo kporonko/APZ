@@ -60,18 +60,42 @@ export const GetTeam = async (token: string) => {
 
 export const CreateTeam = async (token: string, team: ITeam) => {
     console.log(team);
-    const response = await fetch(`${BASE_URL}/Team/team`, {
-        method: 'POST',
-        headers:{
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token,
-        },
-        body: JSON.stringify({
-            "name": team.name,
-            "description": team.description,
-            "image": team.image,
-        })
-    });
-    const res = response.status;
-    return res;
+    try {
+        const response = await fetch(`${BASE_URL}/Team/team`, {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            },
+            body: JSON.stringify({
+                "name": team.name,
+                "description": team.description,
+                "image": team.image,
+            })
+        });
+        const res = response.status;
+        return res;
+    }
+    catch (error: any) {
+        console.log(error);
+        return error;
+    }
+}
+
+export const DeleteTeam = async (token: string) => {
+    try {
+        const response = await fetch(`${BASE_URL}/Team/team`, {
+            method: 'DELETE',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            }
+        });
+        const res = response.status;
+        return res;
+    }
+    catch (error: any) {
+        console.log(error);
+        return error;
+    }
 }

@@ -353,7 +353,7 @@ body{
   object-fit: cover;
 }
 .edit-team-button{
-  min-width: 200px;
+  min-width: 40%;
   padding: 20px 0;
   background: #444544;
   border-radius: 30px;
@@ -377,7 +377,7 @@ body{
 }
 
 .delete-team-button{
-  min-width: 200px;
+  min-width: 40%;
   padding: 20px 0;
   background: #fb3232;
   border-radius: 30px;
@@ -394,6 +394,11 @@ body{
 }
 .team-page-top-info{
   text-align: center;
+  max-width: 800px;
+}
+.team-page-top-image{
+  display: flex;
+  justify-content: center;
 }
 .header-my-team{
   padding: 20px 40px;

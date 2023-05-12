@@ -31,6 +31,7 @@ const ModalCreateTeamTopPanel = (props:{
     });
 
     const nav = useNavigate();
+
     const handleAddPost = async () => {
         const token = localStorage.getItem('access_token_cybersport');
         if (token === null){

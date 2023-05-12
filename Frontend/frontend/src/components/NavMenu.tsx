@@ -8,11 +8,13 @@ const NavMenu = (props:{indexActive: number}) => {
             myTeam:"My Team",
             about:"About App",
             createGame:"Create Game",
+            players:"Players",
         },
         ru: {
             myTeam:"Моя команда",
             about:"О Приложении",
             createGame:"Створити Гру",
+            players:"Гравці",
         }
     });
 
@@ -29,9 +31,14 @@ const NavMenu = (props:{indexActive: number}) => {
                     </Link>
                 </div>
                 <div className='nav-element'>
+                    <Link to={'/players'} className='nav-link'>
+                        <h2 className={`nav-link-text ${props.indexActive === 1 && 'active-page'}`}>{strings.players}</h2>
+                    </Link>
+                </div>
+                <div className='nav-element'>
                     <h2
                         // onClick={() => {openmodal}}
-                        className={`nav-link-text ${props.indexActive === 1 && 'active-page'}`}
+                        className={`nav-link-text ${props.indexActive === 2 && 'active-page'}`}
                     >
                         {strings.createGame}
                     </h2>
