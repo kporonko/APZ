@@ -1,10 +1,16 @@
+
 .App {
   text-align: center;
   font-family: "Montserrat", Oswald;
   margin: 0;
 }
-body{
+html{
   margin: 0;
+  padding: 0;
+}
+body{
+  margin: 0!important;
+  padding: 0;
 }
 .App-logo {
   height: 40vmin;
@@ -155,12 +161,19 @@ body{
 /* Nav menu */
 
 .nav-wrapper{
+  margin: 0;
   display: flex;
   margin: 5px 0px;
   justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid #eaeaea;
+  background: #abaaaa;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
 }
 .nav-icon{
-  width: 70px;
+  width: 100px;
+  object-fit: contain;
+  border-radius: 10px;
 }
 .nav-link-icon{
   width: 70px;
@@ -176,11 +189,6 @@ body{
   gap: 15px;
 }
 
-.nav-link:hover{
-  transform: scale(1.05);
-  transition: all 0.7s ease;
-}
-
 .nav-link-text{
   color: black;
   font-family: "Oswald", sans-serif;
@@ -188,7 +196,151 @@ body{
   font-size: 34px;
   margin: 0;
   letter-spacing: 2px;
+  cursor: pointer;
+}
+.nav-link-text:hover{
+  transform: scale(1.05);
+  transition: all 0.7s ease;
 }
 .active-page{
   text-decoration: underline;
+}
+
+.team-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", Oswald;
+}
+
+.team-not-found-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", Oswald;
+}
+
+.create-team-button{
+    padding: 20px 50px;
+  background: green;
+    border-radius: 30px;
+  font-family: "Montserrat", Oswald;
+  font-size: 1rem;
+}
+
+.modal-add-post-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+.modal-add-post-content-with-panel{
+  width: 1150px;
+  height: 600px;
+  background: white;
+  border: 1px solid black;
+  border-radius: 20px;
+  background: #1e1e1e;
+}
+.content-while-active-modal{
+  opacity: 0.2;
+}
+
+.modal-add-post-top-panel-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  background: white;
+  border-radius: 20px 20px 0 0;
+}
+.modal-add-post-top-panel-text{
+  font-size: 1rem;
+  color: #1e1e1e;
+  padding: 0.5rem 0.8rem;
+  font-family: "Montserrat", sans-serif;
+}
+.modal-add-post-top-panel-header{
+  color: yellow;
+  font-size: 1.3rem;
+  font-family: "Montserrat", sans-serif;
+}
+
+.modal-add-post-top-panel-text:first-child:hover{
+  cursor: pointer;
+  color: yellow;
+  background: white;
+  border-radius: 20px 0 0 0;
+  transition: 0.5s background-color ease;
+}
+.modal-add-post-top-panel-text:last-child:hover{
+  cursor: pointer;
+  color: yellow;
+  background: white;
+  border-radius: 0 20px 0 0;
+  transition: 0.5s background-color ease;
+}
+
+.modal-add-post-content{
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 20px;
+  gap: 2rem;
+}
+.modal-add-post-image-part-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-add-post-image-wrapper{
+  width: 42rem;
+  height: 30rem;
+  border-radius: 5px;
+  border: 1px solid #1e1e1e;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+.modal-add-post-image{
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  object-fit: contain;
+}
+
+.modal-add-post-desc-part-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-add-post-textarea{
+  border-radius: 5px;
+  background: white;
+  color: black;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+}
+.modal-add-post-desc-text{
+  margin-bottom: 1rem;
+  color: black;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
 }
