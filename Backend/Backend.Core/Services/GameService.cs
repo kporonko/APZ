@@ -4,6 +4,9 @@ using Backend.Infrastructure.Data;
 using Backend.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using MQTTnet;
+using MQTTnet.Client;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -25,19 +28,56 @@ namespace Backend.Core.Services
             _configuration = configuration;
         }
 
-        public async Task<HttpStatusCode> AddHeartBeat(HeartBeatAddRequest game)
+        public async Task<HttpStatusCode> AddHeartBeat()
         {
-            HeartBeat hb = new HeartBeat
+            var mqttFactory = new MqttFactory();
+            using (var mqttClient = mqttFactory.CreateMqttClient())
             {
-                Value = game.Value,
-                GameId = game.GameId,
-                HeartBeatDate = game.HeartBeatDate
-            };
+                var mqttClientOptions = new MqttClientOptionsBuilder()
+                    .WithClientId("Kyryl")
+                    .WithTcpServer("bb2d044fb91b4a17b5434d6fe44f6ff7.s2.eu.hivemq.cloud")
+                    .WithCredentials("Kyryl", "S6P@8xftnhkCWQN")
+                    .WithTls()
+                    .WithCleanSession()
+                    .Build();
 
-            await _context.HeartBeats.AddAsync(hb);
-            await _context.SaveChangesAsync();
-            
-            return HttpStatusCode.OK;
+                var a = await mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
+
+                mqttClient.ApplicationMessageReceivedAsync += e =>
+                {
+                    var a = System.Text.Encoding.Default.GetString(e.ApplicationMessage.Payload);
+                    HeartBeatAddRequest heartbeat = JsonConvert.DeserializeObject<HeartBeatAddRequest>(a);
+
+                    HeartBeat hb = new HeartBeat
+                    {
+                        Value = heartbeat.Value,
+                        GameId = heartbeat.GameId,
+                        HeartBeatDate = DateTime.Now
+                    };
+
+                    _context.HeartBeats.Add(hb);
+                    _context.SaveChanges();
+                    return Task.CompletedTask;
+                };
+                
+                var mqttSubscribeOptions = mqttFactory.CreateSubscribeOptionsBuilder()
+                    .WithTopicFilter(
+                        f =>
+                        {
+                            f.WithTopic("heartbeat");
+                        })
+                    .Build();
+
+                var b = await mqttClient.SubscribeAsync(mqttSubscribeOptions);
+
+
+                Console.WriteLine("Add heartbeat start.");
+
+
+                Console.ReadLine();
+                Console.WriteLine("Add heartbeat stop.");
+                return HttpStatusCode.OK;
+            }
         }
 
         public async Task<GameCreateResponse> CreateGame(GameCreateRequest gameRequest)

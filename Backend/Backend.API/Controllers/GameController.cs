@@ -4,6 +4,10 @@ using Backend.Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MQTTnet.Client;
+using MQTTnet;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Net;
 using System.Security.Claims;
 
@@ -56,10 +60,40 @@ namespace Backend.API.Controllers
             return BadRequest();
         }
 
-        [HttpPost("heartbeat")]
-        public async Task<IActionResult> AddHeartBeat(HeartBeatAddRequest request)
+        [HttpPost("gameid")]
+        public async Task<IActionResult> AddGameId(GameId gameIdRequest)
         {
-            var res = await _gameService.AddHeartBeat(request);
+            var mqttFactory = new MqttFactory();
+            
+            using (var mqttClient = mqttFactory.CreateMqttClient())
+            {
+
+                var mqttClientOptions = new MqttClientOptionsBuilder()
+                    .WithClientId("KyrylGameId")
+                    .WithTcpServer("bb2d044fb91b4a17b5434d6fe44f6ff7.s2.eu.hivemq.cloud")
+                    .WithCredentials("Kyryl", "S6P@8xftnhkCWQN")
+                    .WithTls()
+                    .WithCleanSession()
+                    .Build();
+
+                var a = await mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
+
+                var gameId = gameIdRequest;
+                var message = new MqttApplicationMessageBuilder()
+                    .WithTopic("GameId")
+                    .WithPayload(JsonConvert.SerializeObject(gameId))
+                    .Build();
+                
+                mqttClient.PublishAsync(message);
+                
+            }
+            return Ok();
+        }
+
+        [HttpPost("heartbeat")]
+        public async Task<IActionResult> AddHeartBeat()
+        {
+            var res = await _gameService.AddHeartBeat();
             if (res == HttpStatusCode.OK)
             {
                 return Ok("HeartBeat is added");

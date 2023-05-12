@@ -14,7 +14,7 @@ namespace Backend.Core.Models
         
         [Required]
         public int Value { get; set; }
-        
+
         [Required]
         public int GameId { get; set; }
     }
