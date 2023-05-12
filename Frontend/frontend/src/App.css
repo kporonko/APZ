@@ -227,9 +227,9 @@ body{
 }
 
 .create-team-button{
-    padding: 20px 50px;
+  padding: 20px 50px;
   background: green;
-    border-radius: 30px;
+  border-radius: 30px;
   font-family: "Montserrat", Oswald;
   font-size: 1rem;
 }
@@ -343,4 +343,69 @@ body{
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
   font-weight: 400;
+}
+
+.team-image{
+  margin-top: 20px;
+  width: 500px;
+  height: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+}
+.edit-team-button{
+  min-width: 200px;
+  padding: 20px 0;
+  background: #444544;
+  border-radius: 30px;
+  font-family: "Montserrat", Oswald;
+  font-size: 1rem;
+  text-align: center;
+  color: white;
+}
+
+.edit-team-button:hover{
+  cursor: pointer;
+  background: #1e1e1e;
+  transition: 0.5s background-color ease;
+}
+.team-btns-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.delete-team-button{
+  min-width: 200px;
+  padding: 20px 0;
+  background: #fb3232;
+  border-radius: 30px;
+  font-family: "Montserrat", Oswald;
+  font-size: 1rem;
+  text-align: center;
+  color: white;
+}
+
+.delete-team-button:hover{
+  cursor: pointer;
+  background: #9a0303;
+  transition: 0.5s background-color ease;
+}
+.team-page-top-info{
+  text-align: center;
+}
+.header-my-team{
+  padding: 20px 40px;
+  background: #1e1e1e;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  font-family: "Montserrat", Oswald;
+}
+.team-wrapper{
+  margin-top: 20px;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 20px;
 }
