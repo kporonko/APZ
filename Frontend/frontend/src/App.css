@@ -415,3 +415,33 @@ body{
   border-radius: 20px;
   padding: 20px;
 }
+
+.input-small>input{
+  width: 24rem;
+  margin-bottom: 30px;
+}
+
+.players-content{
+  font-family: "Montserrat", Oswald;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.no-players{
+  margin-top: 50px;
+  font-size: 1.5rem;
+}
+.add-player-button{
+  padding: 20px 150px;
+  background: #0dc70d;
+  border-radius: 30px;
+  font-family: "Montserrat", Oswald;
+  font-size: 1rem;
+  text-align: center;
+  color: white;
+}
+.add-player-button:hover{
+  cursor: pointer;
+  background: #0a9e0a;
+  transition: 0.5s background-color ease;
+}
