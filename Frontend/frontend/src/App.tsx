@@ -20,6 +20,7 @@ function App() {
           <Route path="/players" element={<Players/>}/>
           <Route path="/player/:id" element={<Player/>}/>
           <Route path="/game/:id" element={<Game/>}/>
+        {/*    Game current add route    */}
         </Routes>
       </BrowserRouter>
   );

@@ -31,7 +31,6 @@ const ModalAddPlayerContent = (props:{
         }
     });
 
-    const nav = useNavigate();
     const fileInput = useRef<HTMLInputElement>(null);
     const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
 

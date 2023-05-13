@@ -10,7 +10,7 @@ const TeamNotFound = (props:{
             createTeam:"Create Team",
         },
         ru: {
-            teamNotFound:"Команда не найдена",
+            teamNotFound:"Команда не знайдена",
             createTeam:"Створити Команду",
         }
     });

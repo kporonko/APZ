@@ -176,3 +176,27 @@ export const AddPlayer = async (token: string, player: IPlayer) => {
         return error;
     }
 }
+
+
+export const GetPlayer = async (token: string, id: number) => {
+    try {
+        const response = await fetch(`${BASE_URL}/Team/player/${id}`, {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            }});
+
+        if (response.status === 401) {
+            return response.status;
+        }
+        const body = await response.json();
+        const res = body;
+        return res;
+    }
+    catch (error: any) {
+        console.log(error);
+        return error;
+    }
+}
+
