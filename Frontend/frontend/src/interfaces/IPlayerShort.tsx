@@ -1,7 +1,7 @@
 export interface IPlayerShort{
-    Id: number;
-    LastName: string;
-    FirstName: string;
-    Avatar: string;
-    AvgHeartBeatLastGame: number;
+    id: number;
+    lastName: string;
+    firstName: string;
+    avatar: string;
+    avgHeartBeatLastGame: number;
 }
