@@ -99,3 +99,27 @@ export const DeleteTeam = async (token: string) => {
         return error;
     }
 }
+
+export const UpdateTeam = async (token: string, team: ITeam) => {
+    console.log(team);
+    try {
+        const response = await fetch(`${BASE_URL}/Team/team`, {
+            method: 'PUT',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            },
+            body: JSON.stringify({
+                "name": team.name,
+                "description": team.description,
+                "image": team.image,
+            })
+        });
+        const res = response.status;
+        return res;
+    }
+    catch (error: any) {
+        console.log(error);
+        return error;
+    }
+}

@@ -1,9 +1,19 @@
 import React from 'react';
+import LocalizedStrings from "react-localization";
 
 const Loader = () => {
+    let strings = new LocalizedStrings({
+        en:{
+            loading:"Loading...",
+        },
+        ru: {
+            loading:"Загрузка...",
+        }
+    });
+
     return (
         <div>
-            Loading...
+            {strings.loading}
         </div>
     );
 };

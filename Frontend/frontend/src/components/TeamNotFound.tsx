@@ -1,16 +1,28 @@
 import React from 'react';
+import LocalizedStrings from "react-localization";
 
 const TeamNotFound = (props:{
     setModalCreateTeamOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
+    let strings = new LocalizedStrings({
+        en:{
+            teamNotFound:"Team not found",
+            createTeam:"Create Team",
+        },
+        ru: {
+            teamNotFound:"Команда не найдена",
+            createTeam:"Створити Команду",
+        }
+    });
+
     return (
         <div className={"team-not-found-wrapper"}>
-            <h1>Team not found</h1>
+            <h1>{strings.teamNotFound}</h1>
             <div
                 className={"create-team-button"}
                 onClick={() => props.setModalCreateTeamOpen(true)}
             >
-                Create new team
+                {strings.createTeam}
             </div>
         </div>
     );

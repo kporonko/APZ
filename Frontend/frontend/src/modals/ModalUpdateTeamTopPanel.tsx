@@ -1,21 +1,21 @@
 import React from 'react';
+import {ITeam} from "../interfaces/ITeam";
 import LocalizedStrings from "react-localization";
 import {useNavigate} from "react-router";
-import {ITeam} from "../interfaces/ITeam";
 import {toast, ToastContainer} from "react-toastify";
-import {CreateTeam} from "../data/fetch";
+import {CreateTeam, UpdateTeam} from "../data/fetch";
 
-const ModalCreateTeamTopPanel = (props:{
+const ModalUpdateTeamTopPanel = (props:{
     team: ITeam,
-    setModalCreateTeamOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    setModalUpdateTeamOpen: React.Dispatch<React.SetStateAction<boolean>>,
     toggleChange: boolean,
     setToggleChange: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
     let strings = new LocalizedStrings({
         en:{
             cancel:"Cancel",
-            add:"Create Team",
-            team:"Team",
+            add:"Update Team",
+            team:"Update",
             success:'Team created successfully',
             error:'Error creating team',
             fillAllFields:'Please fill all fields',
@@ -23,10 +23,10 @@ const ModalCreateTeamTopPanel = (props:{
         },
         ru: {
             cancel: "Скасувати",
-            add: "Створити команду",
-            team: "Створити",
-            success:'Команду успішно створено',
-            error:'Помилка створення команди',
+            add: "Оновити команду",
+            team: "Оновити",
+            success:'Команду успшно оновлено',
+            error:'Помилка оновлення команди',
             fillAllFields:'Будь ласка, заповніть всі поля',
             expired:"Ваша сесія закінчилася. Будь ласка, увійдіть знову.",
         }
@@ -34,7 +34,7 @@ const ModalCreateTeamTopPanel = (props:{
 
     const nav = useNavigate();
 
-    const handleAddPost = async () => {
+    const handleUpdateTeam = async () => {
         const token = localStorage.getItem('access_token_cybersport');
         if (token === null){
             const notify = () => toast.error(strings.expired);
@@ -42,13 +42,13 @@ const ModalCreateTeamTopPanel = (props:{
             setTimeout(() => nav('/'), 2000);
         }
         else if (props.team.image.length > 0 && props.team.description.length > 0) {
-            const res = await CreateTeam(token!, props.team);
+            const res = await UpdateTeam(token!, props.team);
             console.log(res);
             if (res === 200) {
                 const notify = () => toast.success(strings.success);
                 notify();
                 props.setToggleChange(!props.toggleChange);
-                setTimeout(() => props.setModalCreateTeamOpen(false), 1000);
+                setTimeout(() => props.setModalUpdateTeamOpen(false), 1000);
             }
             else if (res === 401) {
                 const notify = () => toast.error(strings.expired);
@@ -69,13 +69,13 @@ const ModalCreateTeamTopPanel = (props:{
     return (
         <div>
             <div className='modal-add-post-top-panel-wrapper'>
-                <div onClick={() => props.setModalCreateTeamOpen(false)} className="modal-add-post-top-panel-text">
+                <div onClick={() => props.setModalUpdateTeamOpen(false)} className="modal-add-post-top-panel-text">
                     {strings.cancel}
                 </div>
                 <div className="modal-add-post-top-panel-header">
                     {strings.add}
                 </div>
-                <div onClick={handleAddPost} className="modal-add-post-top-panel-text">
+                <div onClick={handleUpdateTeam} className="modal-add-post-top-panel-text">
                     {strings.team}
                 </div>
             </div>
@@ -95,4 +95,4 @@ const ModalCreateTeamTopPanel = (props:{
     );
 };
 
-export default ModalCreateTeamTopPanel;
+export default ModalUpdateTeamTopPanel;

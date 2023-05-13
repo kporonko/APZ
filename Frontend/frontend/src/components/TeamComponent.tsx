@@ -8,7 +8,12 @@ import {toast, ToastContainer} from "react-toastify";
 import {DeleteTeam} from "../data/fetch"; // Import css
 
 
-const TeamComponent = (props:{team: ITeam}) => {
+const TeamComponent = (props:{
+    team: ITeam,
+    toggleChange: boolean,
+    setToggleChange: React.Dispatch<React.SetStateAction<boolean>>,
+    setModalUpdateTeamOpen: React.Dispatch<React.SetStateAction<boolean>>,
+}) => {
 
     let strings = new LocalizedStrings({
         en:{
@@ -16,7 +21,7 @@ const TeamComponent = (props:{team: ITeam}) => {
             delete:"Delete Team",
             myTeam:"My Team",
         },
-        ua: {
+        ru: {
             edit:"Редагувати Команду",
             delete:"Видалити Команду",
             myTeam:"Моя Команда",
@@ -52,6 +57,7 @@ const TeamComponent = (props:{team: ITeam}) => {
             if (res === 200) {
                 const notify = () => toast.success("Team deleted!");
                 notify();
+                props.setToggleChange(!props.toggleChange);
             }
             else {
                 const notify = () => toast.error("Failed to delete team!");
@@ -82,7 +88,7 @@ const TeamComponent = (props:{team: ITeam}) => {
                     <p>{props.team.description}</p>
                 </div>
                 <div className="team-btns-wrapper">
-                    <div className="edit-team-button">
+                    <div onClick={() => props.setModalUpdateTeamOpen(true)} className="edit-team-button">
                         {strings.edit}
                     </div>
                     <div onClick={(e) => handleDelete(e)} className="delete-team-button">

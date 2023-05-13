@@ -9,11 +9,14 @@ import ModalCreateTeam from "../modals/ModalCreateTeam";
 import {toast} from "react-toastify";
 import LocalizedStrings from "react-localization";
 import {useNavigate} from "react-router";
+import ModalUpdateTeam from "../modals/ModalUpdateTeam";
 
 const Team = () => {
 
     const [team, setTeam] = React.useState<ITeam|null|undefined>(undefined);
     const [modalCreateTeamOpen, setModalCreateTeamOpen] = React.useState<boolean>(false);
+    const [modalUpdateTeamOpen, setModalUpdateTeamOpen] = React.useState<boolean>(false);
+    const [toggleChange, setToggleChange] = React.useState<boolean>(false);
 
     let strings = new LocalizedStrings({
         en:{
@@ -53,19 +56,20 @@ const Team = () => {
             }
         }
         getTeam();
-    }, [])
+    }, [toggleChange])
 
 
     return (
         <div>
-            <div className={modalCreateTeamOpen ? "content-while-active-modal" : ''}>
+            <div className={modalCreateTeamOpen || modalUpdateTeamOpen ? "content-while-active-modal" : ''}>
                 <NavMenu indexActive={0}/>
                 <div className="team-page">
-                    {team === undefined ? <Loader/> : team === null ? <TeamNotFound setModalCreateTeamOpen={setModalCreateTeamOpen}/> : <TeamComponent team={team}/>}
+                    {team === undefined ? <Loader/> : team === null ? <TeamNotFound setModalCreateTeamOpen={setModalCreateTeamOpen}/> : <TeamComponent setModalUpdateTeamOpen={setModalUpdateTeamOpen} setToggleChange={setToggleChange} toggleChange={toggleChange} team={team}/>}
                 </div>
             </div>
 
-            {modalCreateTeamOpen && <ModalCreateTeam team={team} setTeam={setTeam} setModalCreateTeamOpen={setModalCreateTeamOpen}/>}
+            {modalCreateTeamOpen && <ModalCreateTeam setToggleChange={setToggleChange} toggleChange={toggleChange} team={team} setTeam={setTeam} setModalCreateTeamOpen={setModalCreateTeamOpen}/>}
+            {modalUpdateTeamOpen && <ModalUpdateTeam setToggleChange={setToggleChange} toggleChange={toggleChange} team={team} setTeam={setTeam} setModalUpdateTeamOpen={setModalUpdateTeamOpen}/>}
         </div>
     );
 };
