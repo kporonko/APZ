@@ -110,8 +110,8 @@ namespace Backend.Core.Services
             (int badAverageInRowCount, int badRangeInRowCount) = GetGamesInTheRowStats(player);
             var gamesData = new GameBaseResponse
             {
-                BadAverageInRowCount = 0,
-                BadRangeInRowCount = 0,
+                BadAverageInRowCount = badAverageInRowCount,
+                BadRangeInRowCount = badRangeInRowCount,
                 Games = player.Games.Select(x => new GameBaseData
                 {
                     Id = x.Id,
