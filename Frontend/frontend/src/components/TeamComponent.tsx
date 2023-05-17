@@ -20,28 +20,42 @@ const TeamComponent = (props:{
             edit:"Edit Team",
             delete:"Delete Team",
             myTeam:"My Team",
+            successDelete:"Team was successfully deleted.",
+            failedDelete:"Error while deleting team.",
+            expired:"Your session is expired. Please log in again.",
+            sureDelete:"Are you sure you want to delete this team?",
+            yes:"Yes",
+            no:"No",
+            confirm:"Confirm",
         },
         ru: {
             edit:"Редагувати Команду",
             delete:"Видалити Команду",
             myTeam:"Моя Команда",
+            successDelete:"Команда була успішно видалена.",
+            failedDelete:"Помилка при видаленні команди.",
+            expired:"Ваша сесія закінчилася. Будь ласка, увійдіть знову.",
+            sureDelete:"Ви впевнені, що хочете видалити цю команду?",
+            yes:"Так",
+            no:"Ні",
+            confirm:"Підтвердити",
         }
     });
 
     const handleDelete = async (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault()
         confirmAlert({
-            message:'Are you sure to delete a team ?',
-            title: 'Confirm To Delete',
+            message:strings.sureDelete,
+            title: strings.confirm,
             buttons:[
                 {
-                    label: 'Yes',
+                    label: strings.yes,
                     onClick: async () => {
                         await deleteTeam()
                     }
                 },
                 {
-                    label: 'No',
+                    label: strings.no,
                 }
             ]
         })
@@ -55,17 +69,17 @@ const TeamComponent = (props:{
             const res = await DeleteTeam(token);
             console.log(res);
             if (res === 200) {
-                const notify = () => toast.success("Team deleted!");
+                const notify = () => toast.success(strings.successDelete);
                 notify();
                 props.setToggleChange(!props.toggleChange);
             }
             else {
-                const notify = () => toast.error("Failed to delete team!");
+                const notify = () => toast.error(strings.failedDelete);
                 notify();
             }
         }
         else {
-            const notify = () => toast.error("Session expired!");
+            const notify = () => toast.error(strings.expired);
             notify();
             setTimeout(() => {
                 nav("/")

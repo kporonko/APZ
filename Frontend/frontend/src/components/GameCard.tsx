@@ -2,10 +2,24 @@ import React from 'react';
 import {IGame} from "../interfaces/IGame";
 import {IGameShort} from "../interfaces/IGameShort";
 import {Link} from "react-router-dom";
+import LocalizedStrings from "react-localization";
 
 const GameCard = (props:{
     game: IGameShort,
 }) => {
+    const strings = new LocalizedStrings({
+        en:{
+            game:"Game",
+            from:"from",
+            to:"to",
+        },
+        ru: {
+            game:"Гра",
+            from:"з",
+            to:"до",
+        }
+
+    })
     return (
         <Link className="game-card-wrapper" to={`/game/${props.game.id}`}>
             <div>
@@ -13,13 +27,13 @@ const GameCard = (props:{
             </div>
             <div className={"game-card-info-wrapper"}>
                 <div className="game-card-id">
-                    Game№{props.game.id}
+                    {strings.game}№{props.game.id}
                 </div>
                 <div className="game-card-date">
-                    from {new Date(props.game.gameStartDate).toLocaleDateString()}
+                    {strings.from} {new Date(props.game.gameStartDate).toLocaleDateString()}
                 </div>
                 <div className="game-card-date">
-                    to {props.game.gameEndDate && new Date(props.game.gameEndDate).toLocaleDateString()}
+                    {strings.to} {props.game.gameEndDate && new Date(props.game.gameEndDate).toLocaleDateString()}
                 </div>
                 <div className="heartbeat-circle">
                     {props.game.avgHeartBeat}

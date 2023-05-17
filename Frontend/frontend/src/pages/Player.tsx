@@ -23,9 +23,35 @@ const Player = () => {
     const strings = new LocalizedStrings({
         en:{
             expired:"Your session is expired. Please log in again.",
+            playerDeleted: "Player deleted successfully!",
+            sureDelete: "Are you sure you want to delete this player?",
+            yes: "Yes",
+            no: "No",
+            confirm: 'Confirm To Delete',
+            edit: "Edit",
+            delete: "Delete",
+            playerinfo: "Player info",
+            games: "Games",
+            badRange: "Bad range heartbeats in",
+            badAvg: "Bad average heartbeat in",
+            gamesRow: "games in the row",
+            failedDelete:"Failed to delete player!"
         },
         ru: {
             expired:"Ваша сесія закінчилася. Будь ласка, увійдіть знову.",
+            playerDeleted: "Гравець успішно видалений!",
+            sureDelete: "Ви впевнені, що хочете видалити цього гравця?",
+            yes: "Так",
+            no: "Ні",
+            confirm: 'Підтвердити видалення',
+            edit: "Редагувати",
+            delete: "Видалити",
+            playerinfo: "Інформація про гравця",
+            games: "Ігри",
+            badRange: "Поганий діапазон серцебиття в",
+            badAvg: "Поганий середній серцевий ритм в",
+            gamesRow: "іграх поспіль",
+            failedDelete:"Не вдалося видалити гравця!"
         }
     })
     useEffect(() => {
@@ -71,17 +97,17 @@ const Player = () => {
     const handleDeletePlayer = async (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault()
         confirmAlert({
-            message:'Are you sure to delete the '+ id+ ' player ?',
-            title: 'Confirm To Delete',
+            message: strings.sureDelete,
+            title: strings.confirm,
             buttons:[
                 {
-                    label: 'Yes',
+                    label: strings.yes,
                     onClick: async () => {
                         await deleteEmployee()
                     }
                 },
                 {
-                    label: 'No',
+                    label: strings.no,
                 }
             ]
         })
@@ -92,7 +118,7 @@ const Player = () => {
         if (token && id) {
             const res = await DeletePlayer(token, +id!);
             if (res === 200) {
-                const notify = () => toast.success("Player deleted!");
+                const notify = () => toast.success(strings.playerDeleted);
                 notify();
                 setTimeout(() => {
                     nav("/players")
@@ -104,9 +130,14 @@ const Player = () => {
                 setTimeout(() => nav('/'), 2000);
             }
             else {
-                const notify = () => toast.error("Failed to delete employee!");
+                const notify = () => toast.error(strings.failedDelete);
                 notify();
             }
+        }
+        else {
+            const notify = () => toast.error(strings.expired);
+            notify();
+            setTimeout(() => nav('/'), 2000);
         }
     }
     return (
@@ -115,15 +146,15 @@ const Player = () => {
                 <NavMenu indexActive={-1}/>
                 <div className="player-info">
                     <div className={"header-my-team"}>
-                        Player info
+                        {strings.playerinfo}
                     </div>
                     <div className={"flex"}>
                         <div onClick={() => {}} className={"delete-player-btn"}>
-                            Edit
+                            {strings.edit}
                         </div>
 
                         <div onClick={(e) => handleDeletePlayer(e)} className="edit-player-btn">
-                            Delete
+                            {strings.delete}
                         </div>
                     </div>
                     <div className={"player-wrapper"}>
@@ -144,14 +175,14 @@ const Player = () => {
             <div>
                 <div>
                     <div style={{margin: "50px 0px 20px 0px"}} className="header-my-team">
-                        Games
+                        {strings.games}
                     </div>
                     <div className="games-analysis-wrapper">
                         <div className={playerGames?.badAverageInRowCount === 0 ? "green games-analysis" : playerGames?.badAverageInRowCount! > 0 && playerGames?.badAverageInRowCount! < 3 ? "yellow games-analysis" : "red games-analysis"}>
-                            Bad average heartbeat in {playerGames?.badAverageInRowCount} games in the row
+                            {strings.badAvg} {playerGames?.badAverageInRowCount} {strings.gamesRow}
                         </div>
                         <div className={playerGames?.badRangeInRowCount === 0 ? "green games-analysis" : playerGames?.badRangeInRowCount! > 0 && playerGames?.badRangeInRowCount! < 3 ? "yellow games-analysis" : "red games-analysis"}>
-                            Bad range heartbeats in {playerGames?.badRangeInRowCount} games in the row
+                            {strings.badRange} {playerGames?.badRangeInRowCount} {strings.gamesRow}
                         </div>
                     </div>
                 </div>

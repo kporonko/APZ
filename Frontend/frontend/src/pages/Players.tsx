@@ -8,6 +8,7 @@ import {toast, ToastContainer} from "react-toastify";
 import {useNavigate} from "react-router";
 import ModalAddPlayer from "../modals/ModalAddPlayer";
 import ModalUpdateTeam from "../modals/ModalUpdateTeam";
+import LocalizedStrings from "react-localization";
 
 const Players = () => {
 
@@ -18,13 +19,26 @@ const Players = () => {
     const [modalAddPlayer, setModalAddPlayer] = React.useState<boolean>(false);
     const [toggleChange, setToggleChange] = React.useState<boolean>(false);
 
+    const strings = new LocalizedStrings({
+        en:{
+            expired:"Your session is expired. Please log in again.",
+            myPlayers: "My Players",
+            addPlayer: "Add Player",
+        },
+        ru: {
+            expired:"Ваша сесія закінчилася. Будь ласка, увійдіть знову.",
+            myPlayers: "Мої гравці",
+            addPlayer: "Додати гравця",
+        }
+    })
+
     useEffect(() => {
         const getPlayers = async () => {
             const token = localStorage.getItem("access_token_cybersport");
             if (token) {
                 const response = await GetPlayers(token);
                 if (response === 401) {
-                    const notify = () => toast.error("Your session is expired. Please log in again.");
+                    const notify = () => toast.error(strings.expired);
                     notify();
                     setTimeout(() => nav('/'), 2000);
                 }
@@ -35,7 +49,7 @@ const Players = () => {
 
             }
             else {
-                const notify = () => toast.error("Ваша сесія закінчилася. Будь ласка, увійдіть знову.");
+                const notify = () => toast.error(strings.expired);
                 notify();
                 setTimeout(() => nav("/"), 2000);
             }
@@ -49,10 +63,10 @@ const Players = () => {
                 <NavMenu indexActive={1}/>
                 <div className={"players-content"}>
                     <h1 className={"players-header"}>
-                        My Players
+                        {strings.myPlayers}
                     </h1>
                     <div onClick={() => setModalAddPlayer(true)} className={"add-player-button"}>
-                        Add player
+                        {strings.addPlayer}
                     </div>
                     <div className={"players-cards-wrapper"}>
                         {players.length > 0 ? players.map((player, ind) => (
