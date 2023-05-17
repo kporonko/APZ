@@ -2,6 +2,7 @@ import {ILoginUser} from "../interfaces/ILoginUser";
 import {IRegisterUser} from "../interfaces/IRegisterUser";
 import {ITeam} from "../interfaces/ITeam";
 import {IPlayer} from "../interfaces/IPlayer";
+import {IPlayerInfo} from "../interfaces/IPlayerInfo";
 
 export const BASE_URL = 'https://localhost:7061/api';
 export const BASE_URL_THINGSPEAK = "https://api.thingspeak.com/"
@@ -244,3 +245,28 @@ export const DeletePlayer = async (token: string, playerId: number) => {
     }
 }
 
+
+export const EditPlayer = async (token: string, player: IPlayerInfo) => {
+    try {
+        const response = await fetch(`${BASE_URL}/Team/player`, {
+            method: 'PUT',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            },
+            body: JSON.stringify({
+                "id": player.id,
+                "lastName": player.lastName,
+                "firstName": player.firstName,
+                "avatar": player.avatar,
+            })
+        });
+
+        const res = response.status;
+        return res;
+    }
+    catch (error: any) {
+        console.log(error);
+        return error;
+    }
+}

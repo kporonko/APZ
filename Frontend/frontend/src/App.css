@@ -667,3 +667,28 @@ body{
   align-items: center;
   justify-content: center;
 }
+
+.input-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+.input-wrapper>div>input{
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid black;
+  border-radius: 20px;
+  background: #4d4c4c;
+  color: white;
+  font-family: "Montserrat", Oswald;
+  font-weight: 900;
+  font-size: 1.5rem;
+}
+
+.player-info-wrapper>div>h1{
+  max-width:20rem;
+  overflow: auto;
+}

@@ -10,6 +10,7 @@ import GameCard from "../components/GameCard";
 import {IGameShort} from "../interfaces/IGameShort";
 import {IGames} from "../interfaces/IGames";
 import {confirmAlert} from "react-confirm-alert";
+import EditPlayerModal from "../modals/EditPlayerModal";
 
 const Player = () => {
 
@@ -18,6 +19,8 @@ const Player = () => {
     const [player, setPlayer] = React.useState<IPlayerInfo>()
     const [playerGames, setPlayerGames] = React.useState<IGames>()
 
+    const [isOpenEditModal, setIsOpenEditModal] = React.useState(false);
+    const [toggleChange, setToggleChange] = React.useState(false);
     const nav = useNavigate();
 
     const strings = new LocalizedStrings({
@@ -92,7 +95,7 @@ const Player = () => {
         }
         getPlayer();
         getPlayerGames();
-    }, [id])
+    }, [id, toggleChange])
 
     const handleDeletePlayer = async (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -142,14 +145,14 @@ const Player = () => {
     }
     return (
         <div>
-            <div>
+            <div className={!isOpenEditModal ?"" : "content-while-active-modal"}>
                 <NavMenu indexActive={-1}/>
-                <div className="player-info">
+                <div className={"player-info"}>
                     <div className={"header-my-team"}>
                         {strings.playerinfo}
                     </div>
                     <div className={"flex"}>
-                        <div onClick={() => {}} className={"delete-player-btn"}>
+                        <div onClick={() => {setIsOpenEditModal(true)}} className={"delete-player-btn"}>
                             {strings.edit}
                         </div>
 
@@ -194,6 +197,7 @@ const Player = () => {
             </div>
             </div>
             <ToastContainer/>
+            {isOpenEditModal && <EditPlayerModal setPlayer={setPlayer} setToggleChange={setToggleChange} toggleChange={toggleChange} player={player!} isOpen={isOpenEditModal} setIsOpen={setIsOpenEditModal}/>}
         </div>
     );
 };
