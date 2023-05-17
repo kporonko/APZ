@@ -11,6 +11,7 @@ namespace Backend.Core.Models
         public bool IsRangeGood { get; set; }
         public int TimesMoreMaxHeartBeat { get; set; }
         public int TimesLowerMinimumHeartBeat { get; set; }
-        public bool IsAverageGood { get; set; }
+        public bool IsAverageHigher { get; set; }
+        public bool IsAverageLower { get; set; }
     }
 }

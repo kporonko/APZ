@@ -221,27 +221,31 @@ namespace Backend.Core.Services
 
             return new AnalysisData
             {
-                IsAverageGood = analysis.isAvgGood,
+                IsAverageHigher = analysis.isAvgHigher,
+                IsAverageLower= analysis.isAvgLower,
                 IsRangeGood = analysis.isRangeGood,
                 TimesLowerMinimumHeartBeat = analysis.timesLower,
                 TimesMoreMaxHeartBeat = analysis.timesHigher
             };
         }
 
-        private (bool isAvgGood, bool isRangeGood, int timesLower, int timesHigher) GetAnalysisOfGame(Game game, int minHeartBeatForAge, double increaseCoef, int maxIncrease, int maxDeviation)
+        private (bool isAvgHigher, bool isAvgLower, bool isRangeGood, int timesLower, int timesHigher) GetAnalysisOfGame(Game game, int minHeartBeatForAge, double increaseCoef, int maxIncrease, int maxDeviation)
         {
             var avgValue = game.HeartBeats.Select(x => x.Value).Average();
-            var isAvgGood = avgValue < minHeartBeatForAge + maxDeviation * increaseCoef;
+
+            var maxValue = minHeartBeatForAge + maxIncrease * increaseCoef;
+            var isAvgHigher = avgValue < (minHeartBeatForAge + maxValue) / 2 + maxDeviation * increaseCoef;
+            var isAvgLower = avgValue > minHeartBeatForAge;
 
             var minimum = game.HeartBeats.Select(x => x.Value).Min();
             var maximum = game.HeartBeats.Select(x => x.Value).Max();
-            var isRangeGood = maximum - minimum < maxIncrease * increaseCoef;
+            var isRangeGood = maximum - minimum < maxDeviation * increaseCoef;
 
             var timesLower = game.HeartBeats.Count(x => x.Value < minHeartBeatForAge);
 
             var timesHigher = game.HeartBeats.Count(x => x.Value > minHeartBeatForAge + maxIncrease * increaseCoef);
 
-            return (isAvgGood, isRangeGood, timesLower, timesHigher);
+            return (isAvgHigher, isAvgLower, isRangeGood, timesLower, timesHigher);
         }
 
         private int GetAge(DateTime birthDate)

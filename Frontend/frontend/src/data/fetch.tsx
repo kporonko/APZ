@@ -3,6 +3,9 @@ import {IRegisterUser} from "../interfaces/IRegisterUser";
 import {ITeam} from "../interfaces/ITeam";
 import {IPlayer} from "../interfaces/IPlayer";
 import {IPlayerInfo} from "../interfaces/IPlayerInfo";
+import {ITempDto} from "../interfaces/ITempDto";
+import {IGame} from "../interfaces/IGame";
+import {IGameFull} from "../interfaces/IGameFull";
 
 export const BASE_URL = 'https://localhost:7061/api';
 export const BASE_URL_THINGSPEAK = "https://api.thingspeak.com/"
@@ -269,4 +272,39 @@ export const EditPlayer = async (token: string, player: IPlayerInfo) => {
         console.log(error);
         return error;
     }
+}
+
+export const GetGame = async (token: string, id: number) => {
+    try {
+        const response = await fetch(`${BASE_URL}/Game/game/${id}`, {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            }});
+
+        if (response.status === 401) {
+            return response.status;
+        }
+        const body = await response.json();
+        const res = body;
+        return res;
+    }
+    catch (error: any) {
+        console.log(error);
+        return error;
+    }
+}
+
+export const getTemperatureForChart = async (ip: string, key: string, start: string, end: string) => {
+    const response = await fetch(`${BASE_URL_THINGSPEAK}channels/${ip}/feeds.json?api_key=${key}&start=${start}&end=${end}`, {
+        method: 'GET',
+        headers:{
+            'Content-Type': 'application/json'
+        }});
+
+    const body = await response.json();
+    const res = body.feeds as ITempDto[];
+    console.log(res)
+    return res;
 }
