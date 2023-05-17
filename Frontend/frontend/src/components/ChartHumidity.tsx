@@ -2,27 +2,25 @@ import React from 'react';
 import {ITempDto} from "../interfaces/ITempDto";
 import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from "recharts";
 import {IGameFull} from "../interfaces/IGameFull";
+import {DateTime} from "luxon";
 
 const ChartHumidity = (props:{
     data: ITempDto[],
     game: IGameFull
 }) => {
     let data = props.data;
-    console.log(data);
     const userLocale = navigator.language;
-    const options = {
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
-    };
+
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
     let formattedData = data.map((item) => ({
         ...item,
-        created_at: new Date(item.created_at).toLocaleString(userLocale, options)
+        created_at: new Date(DateTime.fromISO(item.created_at, { zone: 'UTC', locale: userLocale }).setZone(timeZone).toISO()!).toLocaleString()
     }));
 
     formattedData.filter((item) => {
-        return new Date(item.created_at) > new Date(props.game.gameStartDate) && new Date(item.created_at) < new Date(props.game.gameEndDate);
+        return new Date(item.created_at!) > new Date(props.game.gameStartDate) && new Date(item.created_at!) < new Date(props.game.gameEndDate);
     })
 
-    console.log(formattedData);
     return (
         <div className={"chart-wrapper"}>
             <LineChart

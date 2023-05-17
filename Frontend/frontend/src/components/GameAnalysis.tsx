@@ -77,8 +77,6 @@ const GameAnalysis = (props:{
         else if (lower) {
             text += strings.avgLow;
         }
-        console.log(strings.avgHigh);
-        console.log(text);
         return text;
     }
 
@@ -139,8 +137,6 @@ const GameAnalysis = (props:{
         else if (!isGood) {
             text += strings.avgRangeBad;
         }
-        console.log(strings.avgHigh);
-        console.log(text);
         return text;
     }
 
@@ -175,7 +171,6 @@ const GameAnalysis = (props:{
         let analysis = props.game.analysis.timesLowerMinimumHeartBeat;
         let text: string = "";
 
-        console.log(analysis);
         if (analysis === 0) {
             text += strings.timesLowerNull + analysis + strings.good;
         }

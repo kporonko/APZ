@@ -54,7 +54,6 @@ const Game = () => {
             const token = localStorage.getItem('access_token_cybersport');
             if (token && id) {
                 const response = await GetGame(token, +id);
-                console.log(response);
                 if (response === 401) {
                     const notify = () => toast.error(strings.expired);
                     notify();
@@ -79,15 +78,14 @@ const Game = () => {
 
         const getTempData = async () => {
             if (gameData) {
-                const userLocale = navigator.language;
-
-                const startDate = new Date(new Date(gameData.gameStartDate).toLocaleString(userLocale)).toISOString();
-                const endDate = new Date(new Date(gameData.gameEndDate).toLocaleString(userLocale)).toISOString();
-                const res = await getTemperatureForChart("1954161", "AV9VRNL2O9T3RHI5", startDate, endDate);
-                console.log(res);
+                const timeZone = "UTC"
+                const startDate = DateTime.fromISO(gameData.gameStartDate, { zone: 'Europe/Kiev' });
+                const convertedStartDate = startDate.setZone(timeZone);
+                const endDate = DateTime.fromISO(gameData.gameEndDate, { zone: 'Europe/Kiev' });
+                const convertedEndDate = endDate.setZone(timeZone);
+                const res = await getTemperatureForChart("1954161", "AV9VRNL2O9T3RHI5", convertedStartDate.toISO()!, convertedEndDate!.toISO()!);
                 setTempData(res);
             }
-
         }
 
         getGameData();
@@ -134,11 +132,11 @@ const Game = () => {
                         {gameData?.description}
                     </div>
                     <div>
-                        {strings.from} {new Date(gameData?.gameStartDate!).toLocaleString()}
+                        {strings.from} {new Date(DateTime.fromISO(gameData?.gameStartDate!, { zone: 'Europe/Kiev', locale: navigator.language }).setZone(Intl.DateTimeFormat().resolvedOptions().timeZone).toISO()!).toLocaleString()}
                     </div>
                     {gameData?.gameEndDate &&
                     <div>
-                        {strings.to} {new Date(gameData?.gameEndDate!).toLocaleString()}
+                        {strings.to} {new Date(DateTime.fromISO(gameData?.gameEndDate!, { zone: 'Europe/Kiev', locale: navigator.language }).setZone(Intl.DateTimeFormat().resolvedOptions().timeZone).toISO()!).toLocaleString()}
                     </div>}
                 </div>
                 {gameData && <div className={"game-info"}>

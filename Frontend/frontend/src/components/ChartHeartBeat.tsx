@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {IGameFull} from "../interfaces/IGameFull";
 import {IChartData} from "../interfaces/IChartData";
 import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from "recharts";
+import {DateTime} from "luxon";
 
 const ChartHeartBeat = (props:{
     game: IGameFull
@@ -9,12 +10,10 @@ const ChartHeartBeat = (props:{
 
     let heartBeats = props.game.heartBeats;
     const userLocale = navigator.language;
-    const options = {
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
-    };
-    const formattedData = heartBeats.map((item) => ({
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    let formattedData = heartBeats.map((item) => ({
         ...item,
-        heartBeatDate: new Date(item.heartBeatDate).toLocaleString(userLocale, options)
+        heartBeatDate: new Date(DateTime.fromISO(item.heartBeatDate, { zone: 'Europe/Kiev', locale: userLocale }).setZone(timeZone).toISO()!).toLocaleString()
     }));
 
     return (

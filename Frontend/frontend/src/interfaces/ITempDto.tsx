@@ -1,5 +1,5 @@
 export interface ITempDto{
-    created_at: Date,
+    created_at: string,
     field1: number,
     field2: number,
 }
