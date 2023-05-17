@@ -3,12 +3,13 @@ import {useNavigate, useParams} from "react-router";
 import NavMenu from "../components/NavMenu";
 import { IPlayer } from '../interfaces/IPlayer';
 import {IPlayerInfo} from "../interfaces/IPlayerInfo";
-import {GetPlayer, GetPlayerGames} from "../data/fetch";
+import {DeletePlayer, GetPlayer, GetPlayerGames} from "../data/fetch";
 import {toast, ToastContainer} from "react-toastify";
 import LocalizedStrings from "react-localization";
 import GameCard from "../components/GameCard";
 import {IGameShort} from "../interfaces/IGameShort";
 import {IGames} from "../interfaces/IGames";
+import {confirmAlert} from "react-confirm-alert";
 
 const Player = () => {
 
@@ -67,6 +68,47 @@ const Player = () => {
         getPlayerGames();
     }, [id])
 
+    const handleDeletePlayer = async (e: React.MouseEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        confirmAlert({
+            message:'Are you sure to delete the '+ id+ ' player ?',
+            title: 'Confirm To Delete',
+            buttons:[
+                {
+                    label: 'Yes',
+                    onClick: async () => {
+                        await deleteEmployee()
+                    }
+                },
+                {
+                    label: 'No',
+                }
+            ]
+        })
+    }
+
+    const deleteEmployee = async () => {
+        const token = localStorage.getItem("access_token_cybersport");
+        if (token && id) {
+            const res = await DeletePlayer(token, +id!);
+            if (res === 200) {
+                const notify = () => toast.success("Player deleted!");
+                notify();
+                setTimeout(() => {
+                    nav("/players")
+                }, 1000)
+            }
+            else if (res === 401) {
+                const notify = () => toast.error(strings.expired);
+                notify();
+                setTimeout(() => nav('/'), 2000);
+            }
+            else {
+                const notify = () => toast.error("Failed to delete employee!");
+                notify();
+            }
+        }
+    }
     return (
         <div>
             <div>
@@ -76,11 +118,11 @@ const Player = () => {
                         Player info
                     </div>
                     <div className={"flex"}>
-                        <div className={"delete-player-btn"}>
+                        <div onClick={() => {}} className={"delete-player-btn"}>
                             Edit
                         </div>
 
-                        <div className="edit-player-btn">
+                        <div onClick={(e) => handleDeletePlayer(e)} className="edit-player-btn">
                             Delete
                         </div>
                     </div>

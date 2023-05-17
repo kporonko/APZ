@@ -221,3 +221,26 @@ export const GetPlayerGames = async (token: string, id: number) => {
         return error;
     }
 }
+
+
+export const DeletePlayer = async (token: string, playerId: number) => {
+    try {
+        const response = await fetch(`${BASE_URL}/Team/player`, {
+            method: 'DELETE',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            },
+            body: JSON.stringify({
+                "playerId": playerId
+            })
+        });
+        const res = response.status;
+        return res;
+    }
+    catch (error: any) {
+        console.log(error);
+        return error;
+    }
+}
+
