@@ -690,5 +690,7 @@ body{
 
 .player-info-wrapper>div>h1{
   max-width:20rem;
-  overflow: auto;
+  word-break: break-word;
+  max-height: 20rem;
+  overflow-y: auto;
 }
