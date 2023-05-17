@@ -75,6 +75,15 @@ const Player = () => {
                     <div className={"header-my-team"}>
                         Player info
                     </div>
+                    <div className={"flex"}>
+                        <div className={"delete-player-btn"}>
+                            Edit
+                        </div>
+
+                        <div className="edit-player-btn">
+                            Delete
+                        </div>
+                    </div>
                     <div className={"player-wrapper"}>
                         <div>
                             <img className={"player-image"} src={player?.avatar} alt=""/>
@@ -88,6 +97,7 @@ const Player = () => {
                             </div>
                         </div>
                     </div>
+
                 </div>
             <div>
                 <div>

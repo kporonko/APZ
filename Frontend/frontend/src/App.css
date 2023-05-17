@@ -500,6 +500,7 @@ body{
 
 .player-wrapper{
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   gap: 10rem;
@@ -607,4 +608,62 @@ body{
   text-decoration: none;
   font-family: "Montserrat", Oswald;
   font-size: 1.5rem;
+}
+
+.player-info{
+  position: relative;
+}
+
+.delete-player-btn{
+  color: #1e1e1e;
+  padding: 10px 15px;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 20px;
+  background: yellow;
+  font-family: "Montserrat", Oswald;
+  font-weight: 900;
+  min-width: 30%;
+  text-align: center;
+}
+.edit-player-btn{
+  color: #1e1e1e;
+  padding: 10px 15px;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 20px;
+  background: #f16464;
+  font-family: "Montserrat", Oswald;
+  font-weight: 900;
+  min-width: 30%;
+  text-align: center;
+}
+
+.edit-player-btn:hover{
+  cursor: pointer;
+  color: white;
+  background: #aa0202;
+  transition: 0.5s background-color ease;
+}
+
+.delete-player-btn:hover{
+  cursor: pointer;
+  color: white;
+  background: #9e9e18;
+  transition: 0.5s background-color ease;
+}
+.absolute{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0%;
+  gap: 680%;
+}
+
+.flex{
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
