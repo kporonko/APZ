@@ -3,7 +3,12 @@ import ModalCreateTeamTopPanel from "./ModalCreateTeamTopPanel";
 import ModalCreateTeamContent from "./ModalCreateTeamContent";
 import {IPlayerShort} from "../interfaces/IPlayerShort";
 import ModalCreateTrainingTopPanel from "./ModalCreateTrainingTopPanel";
-import ModalCreateTrainingContent from "./ModalCreateTrainingContent";
+import ModalCreateGameContent from "./ModalCreateTrainingContent";
+import players from "../pages/Players";
+import {IPlayerForTraining} from "../interfaces/IPlayerForTraining";
+import {ToastContainer} from "react-toastify";
+import LocalizedStrings from "react-localization";
+import {useNavigate} from "react-router";
 
 const ModalCreateTraining = (props:{
     setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>,
@@ -11,16 +16,56 @@ const ModalCreateTraining = (props:{
     setPlayers: React.Dispatch<React.SetStateAction<IPlayerShort[]>>,
 }) => {
 
+    const strings = new LocalizedStrings({
+        en:{
+            cancel:"Cancel",
+            add:"Create game",
+            team:"Create",
+        },
+        ru: {
+            cancel: "Скасувати",
+            add: "Створити гру",
+            team: "Створити",
+        }
+    })
     const closeModal = (e:any) => {
         e.stopPropagation()
         props.setIsOpenModal(false)
     }
 
+    const navigate = useNavigate()
+
+    const handleCreateTraining = () => {
+        const playersForTraining = players.filter((player) => {
+            return player.isPresent === true
+        })
+        console.log(playersForTraining)
+
+        navigate('/game/current', {
+            state: {
+                players: playersForTraining,
+            }
+        })
+    }
+
+    const [players, setPlayers] = React.useState<IPlayerForTraining[]>(props.players as IPlayerForTraining[])
+
     return (
         <div onClick={(e) => closeModal(e)} className={'modal-add-post-wrapper'}>
             <div onClick={(e) => e.stopPropagation()} className="modal-add-post-content-with-panel">
-                <ModalCreateTrainingTopPanel setIsOpenModal={props.setIsOpenModal}/>
-                <ModalCreateTrainingContent players={props.players} setPlayers={props.setPlayers}/>
+                <div className='modal-add-post-top-panel-wrapper'>
+                    <div onClick={() => props.setIsOpenModal(false)} className="modal-add-post-top-panel-text">
+                        {strings.cancel}
+                    </div>
+                    <div className="modal-add-post-top-panel-header">
+                        {strings.add}
+                    </div>
+                    <div onClick={handleCreateTraining} className="modal-add-post-top-panel-text">
+                        {strings.team}
+                    </div>
+                </div>
+                <ToastContainer/>
+                <ModalCreateGameContent setIsOpenModal={props.setIsOpenModal} players={players} setPlayers={setPlayers}/>
             </div>
         </div>
     );

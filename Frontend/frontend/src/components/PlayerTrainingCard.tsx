@@ -7,8 +7,8 @@ import {toast, ToastContainer} from "react-toastify";
 
 const PlayerTrainingCard = (props:{
     player: IPlayerForTraining,
+    setPlayers: React.Dispatch<React.SetStateAction<IPlayerForTraining[]>>,
 }) => {
-
     const [isConnected, setIsConnected] = React.useState<boolean>(false)
     const strings = new LocalizedStrings({
         en: {
@@ -17,6 +17,7 @@ const PlayerTrainingCard = (props:{
             connected: 'Ok',
             success: 'Success',
             error: 'Error',
+            alreadyConnected: 'Already connected',
         },
         ru: {
             channel: 'Id каналу',
@@ -24,11 +25,17 @@ const PlayerTrainingCard = (props:{
             connected: 'Oк',
             success: 'Успішно',
             error: 'Помилка',
+            alreadyConnected: 'Вже підключено',
         }
     })
     const [player, setPlayer] = React.useState<IPlayerForTraining>(props.player)
 
     const handleConnectToIoT = async () => {
+        if (isConnected){
+            const notify = () => toast.error(strings.alreadyConnected);
+            notify();
+            return;
+        }
         const token = localStorage.getItem('access_token_cybersport')
         if (token){
             const res = await AddGame(token, props.player.id, player.channelId);
@@ -37,6 +44,12 @@ const PlayerTrainingCard = (props:{
                 setIsConnected(true)
                 const notify = () => toast.success(strings.success);
                 notify();
+                props.setPlayers(prevState => prevState.map((currPlayer) => {
+                    if (currPlayer.id === props.player.id){
+                        return {...currPlayer, isPresent: true, isConnected: true, gameId: res, channelId: player.channelId}
+                    }
+                    return currPlayer
+                }))
             }
             else{
                 const notify = () => toast.error(strings.error);
@@ -66,7 +79,9 @@ const PlayerTrainingCard = (props:{
                     <div>
                         <label className="label" htmlFor="channel">{strings.channel}</label>
                     </div>
-                    <input value={props.player.channelId} onChange={(e) => setPlayer({...player, channelId: e.target.value})} id={"channel"} name="channel" className={"channel-id-input"} type="text"/>
+                    <input value={props.player.channelId} onChange={(e) => {
+                        setPlayer({...player, channelId: e.target.value})
+                    }} id={"channel"} name="channel" className={"channel-id-input"} type="text"/>
                     <div onClick={handleConnectToIoT} className={isConnected ? "green-bc absolute-btn-connect-to-iot" : "absolute-btn-connect-to-iot"}>
                         {isConnected ? strings.connected : strings.connect}
                     </div>

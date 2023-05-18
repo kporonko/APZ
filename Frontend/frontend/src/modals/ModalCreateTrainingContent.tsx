@@ -5,19 +5,18 @@ import {IPlayerForTraining} from "../interfaces/IPlayerForTraining";
 import PlayerTrainingCard from "../components/PlayerTrainingCard";
 
 const ModalCreateTrainingContent = (props: {
-    players: IPlayerShort[],
-    setPlayers: React.Dispatch<React.SetStateAction<IPlayerShort[]>>
+    players: IPlayerForTraining[],
+    setPlayers: React.Dispatch<React.SetStateAction<IPlayerForTraining[]>>,
+    setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>,
 }) => {
-
-    const [players, setPlayers] = React.useState<IPlayerForTraining[]>(props.players as IPlayerForTraining[])
 
     return (
         <div>
             <div>
-                {players.map((player) => {
+                {props.players.map((player) => {
                     return (
                         <div key={player.id}>
-                            <PlayerTrainingCard player={player} />
+                            <PlayerTrainingCard setPlayers={props.setPlayers} player={player} />
                         </div>
                     )
                 })}

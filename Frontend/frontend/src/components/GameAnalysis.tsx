@@ -185,6 +185,7 @@ const GameAnalysis = (props:{
         return text;
     }
 
+    console.log(props.game.analysis);
     return (
         <div>
             <div className={props.game.analysis.isAverageHigher || props.game.analysis.isAverageLower ? "red-bc header-analysis" : "green-bc header-analysis"}>
@@ -220,7 +221,7 @@ const GameAnalysis = (props:{
                 ))}</h3>
             </div>
 
-            <div className={props.game.analysis.timesMoreMaxHeartBeat < 0 ? "green-bc header-analysis" : "red-bc header-analysis"}>
+            <div className={props.game.analysis.timesMoreMaxHeartBeat <= 0 ? "green-bc header-analysis" : "red-bc header-analysis"}>
                 {getTimesMoreMaxHeartBeatAnalysis()}
             </div>
 
