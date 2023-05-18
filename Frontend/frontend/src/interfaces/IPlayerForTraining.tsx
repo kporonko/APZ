@@ -5,4 +5,5 @@ export interface IPlayerForTraining{
     avatar: string;
     avgHeartBeatLastGame: number;
     isPresent: boolean;
+    channelId: string;
 }

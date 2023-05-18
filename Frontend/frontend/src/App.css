@@ -738,7 +738,7 @@ body{
     background: #fd2828;
 }
 .green-bc{
-  background: #0dc70d;
+  background: #0dc70d!important;
 }
 
 .flex-col-desc-game{
@@ -850,7 +850,6 @@ body{
   max-width: 15rem;
   word-break: break-word;
   max-height: 20rem;
-  overflow-y: auto;
 }
 .channel-id-input{
   margin-top: 0.3rem;

@@ -9,7 +9,7 @@ namespace Backend.Core.Models
     public class GameBaseResponse
     {
         public List<GameBaseData> Games { get; set; }
-        public int BadAverageInRowCount { get; set; }
-        public int BadRangeInRowCount { get; set; }
+        public int? BadAverageInRowCount { get; set; }
+        public int? BadRangeInRowCount { get; set; }
     }
 }

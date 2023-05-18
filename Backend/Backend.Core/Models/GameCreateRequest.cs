@@ -9,11 +9,7 @@ namespace Backend.Core.Models
 {
     public class GameCreateRequest
     {
-        [Required]
-        public DateTime GameStartDate { get; set; }
 
-        [Required]
-        public string Description { get; set; }
 
         [Required]
         public int PlayerId { get; set; }

@@ -12,6 +12,6 @@ namespace Backend.Core.Models
         public DateTime GameStartDate { get; set; }
         public DateTime? GameEndDate { get; set; }
         public bool IsPlayerAbsent { get; set; }
-        public int AvgHeartBeat { get; set; }
+        public int? AvgHeartBeat { get; set; }
     }
 }

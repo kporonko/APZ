@@ -308,3 +308,51 @@ export const getTemperatureForChart = async (ip: string, key: string, start: str
     console.log(res)
     return res;
 }
+
+export const AddGame = async (token: string, playerId: number, sensorId: string) => {
+    console.log(token, playerId, sensorId);
+    try {
+        const response = await fetch(`${BASE_URL}/Game/game`, {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            },
+            body: JSON.stringify({
+                playerId: playerId,
+                sensorId: sensorId,
+            })
+        });
+        console.log(response);
+        const res = await response.json();
+        console.log(res);
+        return res.id;
+    }
+    catch (error: any) {
+        console.log(error);
+        return error;
+    }
+}
+
+
+export const SendGameId = async (token: string, gameId: number) => {
+    try {
+        const response = await fetch(`${BASE_URL}/Game/gameid`, {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            },
+            body: JSON.stringify({
+                id: gameId,
+            })
+        });
+        console.log(response);
+        const res = response.status;
+        return res;
+    }
+    catch (error: any) {
+        console.log(error);
+        return error;
+    }
+}

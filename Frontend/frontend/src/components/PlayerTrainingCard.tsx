@@ -2,22 +2,49 @@ import React from 'react';
 import {IPlayerForTraining} from "../interfaces/IPlayerForTraining";
 import player from "../pages/Player";
 import LocalizedStrings from "react-localization";
+import {AddGame, SendGameId} from "../data/fetch";
+import {toast, ToastContainer} from "react-toastify";
 
 const PlayerTrainingCard = (props:{
     player: IPlayerForTraining,
 }) => {
 
+    const [isConnected, setIsConnected] = React.useState<boolean>(false)
     const strings = new LocalizedStrings({
         en: {
             channel: 'Channel Id',
             connect: 'Connect',
+            connected: 'Ok',
+            success: 'Success',
+            error: 'Error',
         },
         ru: {
             channel: 'Id каналу',
             connect: 'Підключити',
+            connected: 'Oк',
+            success: 'Успішно',
+            error: 'Помилка',
         }
     })
     const [player, setPlayer] = React.useState<IPlayerForTraining>(props.player)
+
+    const handleConnectToIoT = async () => {
+        const token = localStorage.getItem('access_token_cybersport')
+        if (token){
+            const res = await AddGame(token, props.player.id, player.channelId);
+            const connectToIoT = await SendGameId(token, res);
+            if (connectToIoT === 200){
+                setIsConnected(true)
+                const notify = () => toast.success(strings.success);
+                notify();
+            }
+            else{
+                const notify = () => toast.error(strings.error);
+                notify();
+            }
+            setIsConnected(true);
+        }
+    }
 
     return (
         <div onClick={(e) => {
@@ -39,13 +66,13 @@ const PlayerTrainingCard = (props:{
                     <div>
                         <label className="label" htmlFor="channel">{strings.channel}</label>
                     </div>
-                    <input id={"channel"} name="channel" className={"channel-id-input"} type="text"/>
-                    <div className="absolute-btn-connect-to-iot">
-                        {strings.connect}
+                    <input value={props.player.channelId} onChange={(e) => setPlayer({...player, channelId: e.target.value})} id={"channel"} name="channel" className={"channel-id-input"} type="text"/>
+                    <div onClick={handleConnectToIoT} className={isConnected ? "green-bc absolute-btn-connect-to-iot" : "absolute-btn-connect-to-iot"}>
+                        {isConnected ? strings.connected : strings.connect}
                     </div>
                 </div>}
             </div>
-
+            <ToastContainer/>
         </div>
     );
 };

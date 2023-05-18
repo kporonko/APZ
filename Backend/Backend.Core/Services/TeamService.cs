@@ -171,9 +171,9 @@ namespace Backend.Core.Services
 
             var game = x.Games.Last();
             var heartBeats = game.HeartBeats;
-            var values = heartBeats.Select(x => x.Value);
-            var average = values.Average();
-            int? result = (int)average;
+            var values = heartBeats.Select(x => x.Value).ToList();
+            double? average = values.Count > 0 ? values.Average() : null;
+            int? result = average is not null ? (int)average : null;
             return result;
         }
 

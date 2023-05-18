@@ -82,10 +82,11 @@ namespace Backend.Core.Services
 
         public async Task<GameCreateResponse> CreateGame(GameCreateRequest gameRequest)
         {
+            var date = DateTime.Now;
             Game game = new Game
             {
-                Description = gameRequest.Description,
-                GameStartDate = gameRequest.GameStartDate,
+                Description = "", 
+                GameStartDate = date,
                 PlayerId = gameRequest.PlayerId,
                 SensorId = gameRequest.SensorId
             };
@@ -93,7 +94,7 @@ namespace Backend.Core.Services
             await _context.Games.AddAsync(game);
             await _context.SaveChangesAsync();
 
-            var gameGet = await _context.Games.FirstOrDefaultAsync(x => x.GameStartDate == gameRequest.GameStartDate);
+            var gameGet = await _context.Games.FirstOrDefaultAsync(x => x.GameStartDate == date);
             var response = new GameCreateResponse
             {
                 Id = game.Id,
@@ -108,7 +109,7 @@ namespace Backend.Core.Services
             if (player == null)
                 return null;
 
-            (int badAverageInRowCount, int badRangeInRowCount) = GetGamesInTheRowStats(player);
+            (int? badAverageInRowCount, int? badRangeInRowCount) = GetGamesInTheRowStats(player);
             var gamesData = new GameBaseResponse
             {
                 BadAverageInRowCount = badAverageInRowCount,
@@ -118,13 +119,13 @@ namespace Backend.Core.Services
                     Id = x.Id,
                     GameStartDate = x.GameStartDate,
                     GameEndDate = x.GameEndDate,
-                    AvgHeartBeat = (int)x.HeartBeats.Select(x => x.Value).Average()
+                    AvgHeartBeat = x.HeartBeats.Count > 0 ? (int)x.HeartBeats.Select(x => x.Value).Average() : null
                 }).ToList()
             };
             return gamesData;
         }
 
-        private (int badAverageInRowCount, int badRangeInRowCount) GetGamesInTheRowStats(Player player)
+        private (int? badAverageInRowCount, int? badRangeInRowCount) GetGamesInTheRowStats(Player player)
         {
             int badAverageInRowCount = 0;
             int badRangeInRowCount = 0;
@@ -140,6 +141,10 @@ namespace Backend.Core.Services
             var games = player.Games.OrderBy(x => x.GameStartDate).ToList();
             foreach (var game in games)
             {
+                if (game.HeartBeats.Count == 0)
+                {
+                    return (null, null);
+                }
                 var avgValue = game.HeartBeats.Select(x => x.Value).Average();
                 var isAvgGood = avgValue < minimumBeatForAge + maxDeviation * increaseCoef;
 
