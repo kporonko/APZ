@@ -423,6 +423,7 @@ body{
 }
 
 .players-content{
+  position: relative;
   font-family: "Montserrat", Oswald;
   display: flex;
   flex-direction: column;
@@ -787,4 +788,100 @@ body{
   border-radius: 20px;
   background: #4d4c4c;
   color: white;
+}
+
+.error-server{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-family: "Montserrat", Oswald;
+  font-size: 1.3rem;
+  padding: 2rem;
+  margin: 1rem 30rem;
+  border: 1px solid white;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+  border-radius: 20px;
+  background: #4d4c4c;
+  color: white;
+}
+
+.create-game-btn{
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  padding: 1rem 2rem;
+  border: 1px solid black;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+  background: #4d4c4c;
+  color: white;
+}
+.create-game-btn:hover{
+  cursor: pointer;
+  background: #1e1e1e;
+  transition: 0.5s background-color ease;
+}
+
+.player-training-card-wrapper{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rem;
+  border: 1px solid white;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+  margin: 3rem 12rem;
+  padding: 1rem 5rem;
+}
+.player-training-card-img{
+  width: 8rem;
+  height: 8rem;
+  border-radius: 20px;
+  border: 1px solid black;
+  object-fit: cover;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+.player-training-card-info{
+  font-size: 1.2rem;
+  font-family: "Montserrat", Oswald;
+  text-align: right;
+  max-width: 15rem;
+  word-break: break-word;
+  max-height: 20rem;
+  overflow-y: auto;
+}
+.channel-id-input{
+  margin-top: 0.3rem;
+}
+.label{
+  margin: 0;
+  font-family: "Montserrat", Oswald;
+  font-size: 0.5rem;
+}
+.white-bc{
+  background: white;
+  color: black!important;
+}
+.gray-bc{
+  background: #4d4c4c;
+  color: white!important;
+}
+.absolute-btn-connect-to-iot{
+  position: absolute;
+  top: 4rem;
+  right: 1.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid black;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+  background: #4d4c4c;
+  color: white;
+}
+.absolute-btn-connect-to-iot:hover{
+  cursor: pointer;
+  background: #1e1e1e;
+  transition: 0.5s background-color ease;
 }

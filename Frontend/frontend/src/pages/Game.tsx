@@ -12,6 +12,7 @@ import ChartTemp from "../components/ChartTemp";
 import ChartHumidity from "../components/ChartHumidity";
 import {ITempDto} from "../interfaces/ITempDto";
 import { DateTime } from 'luxon';
+import ServerError from "../components/ServerError";
 
 
 const Game = () => {
@@ -76,7 +77,7 @@ const Game = () => {
     }
 
     const getTempData = async () => {
-        if (gameData) {
+        if (gameData && gameData.sensorId) {
             const timeZone = "UTC"
             const startDate = DateTime.fromISO(gameData.gameStartDate, { zone: 'Europe/Kiev' });
             const convertedStartDate = startDate.setZone(timeZone);
@@ -100,57 +101,59 @@ const Game = () => {
     return (
         <div>
             <NavMenu indexActive={-1}/>
-            <div className={"player-info"}>
-                <div className={"header-my-team"}>
-                    {strings.gamedata}
-                </div>
-            </div>
-            <div>
-                <div className={"header-chart"}>
-                    {strings.tempChart}
+            {gameData && gameData.analysis && gameData.analysis.timesLowerMinimumHeartBeat !== undefined && gameData.analysis.timesMoreMaxHeartBeat !== undefined && gameData.analysis.isAverageLower !== undefined && gameData.analysis.isAverageHigher !== undefined && gameData.analysis.isRangeGood !== undefined ? <div>
+                <div className={"player-info"}>
+                    <div className={"header-my-team"}>
+                        {strings.gamedata}
+                    </div>
                 </div>
                 <div>
-                    {gameData && tempData && tempData.length > 0 && <ChartTemp data={tempData} game={gameData}/>}
-                </div>
-
-                <div className={"header-chart"}>
-                    {strings.humChart}
-                </div>
-                <div>
-                    {gameData && tempData && tempData.length > 0 && <ChartHumidity data={tempData} game={gameData}/>}
-                </div>
-
-
-                <div className={"header-chart"}>
-                    {strings.heartBeatChart}
-                </div>
-                <div>
-                    {gameData && <ChartHeartBeat game={gameData}/>}
-                </div>
-
-
-                <div className={"flex-col-desc-game"}>
-                    <div className={"header-text-desc-game"}>
-                        {strings.desc}:
+                    <div className={"header-chart"}>
+                        {strings.tempChart}
                     </div>
                     <div>
-                        {gameData?.description}
+                        {gameData && tempData && tempData.length > 0 && <ChartTemp data={tempData} game={gameData}/>}
+                    </div>
+
+                    <div className={"header-chart"}>
+                        {strings.humChart}
                     </div>
                     <div>
-                        {strings.from} {new Date(DateTime.fromISO(gameData?.gameStartDate!, { zone: 'Europe/Kiev', locale: navigator.language }).setZone(Intl.DateTimeFormat().resolvedOptions().timeZone).toISO()!).toLocaleString()}
+                        {gameData && tempData && tempData.length > 0 && <ChartHumidity data={tempData} game={gameData}/>}
                     </div>
-                    {gameData?.gameEndDate &&
+
+
+                    <div className={"header-chart"}>
+                        {strings.heartBeatChart}
+                    </div>
                     <div>
-                        {strings.to} {new Date(DateTime.fromISO(gameData?.gameEndDate!, { zone: 'Europe/Kiev', locale: navigator.language }).setZone(Intl.DateTimeFormat().resolvedOptions().timeZone).toISO()!).toLocaleString()}
+                        {gameData && gameData.analysis && gameData.analysis.timesLowerMinimumHeartBeat !== undefined && gameData.analysis.timesMoreMaxHeartBeat !== undefined && gameData.analysis.isAverageLower !== undefined && gameData.analysis.isAverageHigher !== undefined && gameData.analysis.isRangeGood !== undefined && <ChartHeartBeat game={gameData}/>}
+                    </div>
+
+
+                    <div className={"flex-col-desc-game"}>
+                        <div className={"header-text-desc-game"}>
+                            {strings.desc}:
+                        </div>
+                        <div>
+                            {gameData?.description}
+                        </div>
+                        <div>
+                            {strings.from} {new Date(DateTime.fromISO(gameData?.gameStartDate!, { zone: 'Europe/Kiev', locale: navigator.language }).setZone(Intl.DateTimeFormat().resolvedOptions().timeZone).toISO()!).toLocaleString()}
+                        </div>
+                        {gameData?.gameEndDate &&
+                            <div>
+                                {strings.to} {new Date(DateTime.fromISO(gameData?.gameEndDate!, { zone: 'Europe/Kiev', locale: navigator.language }).setZone(Intl.DateTimeFormat().resolvedOptions().timeZone).toISO()!).toLocaleString()}
+                            </div>}
+                    </div>
+                    {gameData && gameData.analysis && gameData.analysis.timesLowerMinimumHeartBeat !== undefined && gameData.analysis.timesMoreMaxHeartBeat !== undefined && gameData.analysis.isAverageLower !== undefined && gameData.analysis.isAverageHigher !== undefined && gameData.analysis.isRangeGood !== undefined && <div className={"game-info"}>
+                        <div className={"game-info-item"}>
+                            <GameAnalysis game={gameData}/>
+                        </div>
                     </div>}
                 </div>
-                {gameData && <div className={"game-info"}>
-                    <div className={"game-info-item"}>
-                        <GameAnalysis game={gameData}/>
-                    </div>
-                </div>}
-            </div>
-            <ToastContainer/>
+                <ToastContainer/>
+            </div> : <ServerError/>}
         </div>
     );
 };

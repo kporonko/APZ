@@ -35,16 +35,7 @@ const NavMenu = (props:{indexActive: number}) => {
                         <h2 className={`nav-link-text ${props.indexActive === 1 && 'active-page'}`}>{strings.players}</h2>
                     </Link>
                 </div>
-                <div className='nav-element'>
-                    <h2
-                        // onClick={() => {openmodal}}
-                        className={`nav-link-text ${props.indexActive === 2 && 'active-page'}`}
-                    >
-                        {strings.createGame}
-                    </h2>
-                </div>
             </div>
-
         </div>
     );
 };

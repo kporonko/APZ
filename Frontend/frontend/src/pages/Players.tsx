@@ -9,6 +9,7 @@ import {useNavigate} from "react-router";
 import ModalAddPlayer from "../modals/ModalAddPlayer";
 import ModalUpdateTeam from "../modals/ModalUpdateTeam";
 import LocalizedStrings from "react-localization";
+import ModalCreateTraining from "../modals/ModalCreateTraining";
 
 const Players = () => {
 
@@ -17,6 +18,7 @@ const Players = () => {
     const nav = useNavigate();
 
     const [modalAddPlayer, setModalAddPlayer] = React.useState<boolean>(false);
+    const [isOpenAddTraining, setIsOpenAddTraining] = React.useState<boolean>(false);
     const [toggleChange, setToggleChange] = React.useState<boolean>(false);
 
     const strings = new LocalizedStrings({
@@ -24,11 +26,13 @@ const Players = () => {
             expired:"Your session is expired. Please log in again.",
             myPlayers: "My Players",
             addPlayer: "Add Player",
+            createGame: "Create Game",
         },
         ru: {
             expired:"Ваша сесія закінчилася. Будь ласка, увійдіть знову.",
             myPlayers: "Мої гравці",
             addPlayer: "Додати гравця",
+            createGame: "Створити гру",
         }
     })
 
@@ -43,7 +47,6 @@ const Players = () => {
                     setTimeout(() => nav('/'), 2000);
                 }
                 else{
-                    console.log(response);
                     setPlayers(response as IPlayerShort[]);
                 }
 
@@ -59,7 +62,7 @@ const Players = () => {
 
     return (
         <div>
-            <div className={modalAddPlayer ? "content-while-active-modal" : ""}>
+            <div className={modalAddPlayer || isOpenAddTraining ? "content-while-active-modal" : ""}>
                 <NavMenu indexActive={1}/>
                 <div className={"players-content"}>
                     <h1 className={"players-header"}>
@@ -68,6 +71,14 @@ const Players = () => {
                     <div onClick={() => setModalAddPlayer(true)} className={"add-player-button"}>
                         {strings.addPlayer}
                     </div>
+                    {players.length > 0 && <div className='nav-element'>
+                        <div
+                            className='create-game-btn'
+                            onClick={() => {setIsOpenAddTraining(true)}}
+                        >
+                            {strings.createGame}
+                        </div>
+                    </div>}
                     <div className={"players-cards-wrapper"}>
                         {players.length > 0 ? players.map((player, ind) => (
                             <PlayerCard key={ind} player={player}/>
@@ -76,6 +87,7 @@ const Players = () => {
                 </div>
             </div>
             {modalAddPlayer && <ModalAddPlayer setToggleChange={setToggleChange} toggleChange={toggleChange} setModalAddPlayer={setModalAddPlayer}/>}
+            {isOpenAddTraining && <ModalCreateTraining setPlayers={setPlayers} players={players} setIsOpenModal={setIsOpenAddTraining}/>}
             <ToastContainer/>
         </div>
     );
