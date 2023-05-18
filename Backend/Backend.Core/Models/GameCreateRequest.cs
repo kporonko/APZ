@@ -13,12 +13,12 @@ namespace Backend.Core.Models
         public DateTime GameStartDate { get; set; }
 
         [Required]
-        public bool IsPlayerAbsent { get; set; }
-
-        [Required]
         public string Description { get; set; }
 
         [Required]
         public int PlayerId { get; set; }
+        
+        [Required]
+        public string SensorId { get; set; }
     }
 }

@@ -8,4 +8,5 @@ export interface IGame{
     heartBeats: IHeartBeat[];
     playerId: number;
     isLastHeartBeatOk: boolean;
+    sensorId: number;
 }

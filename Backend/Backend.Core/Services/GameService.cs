@@ -86,7 +86,8 @@ namespace Backend.Core.Services
             {
                 Description = gameRequest.Description,
                 GameStartDate = gameRequest.GameStartDate,
-                PlayerId = gameRequest.PlayerId
+                PlayerId = gameRequest.PlayerId,
+                SensorId = gameRequest.SensorId
             };
 
             await _context.Games.AddAsync(game);
@@ -178,7 +179,8 @@ namespace Backend.Core.Services
                     HeartBeatDate = x.HeartBeatDate
                 }).ToList(),
                 PlayerId = game.Player.Id,
-                IsLastHeartBeatOk = GetAnalysisOfHeartBeat(game.Player, game.HeartBeats.LastOrDefault().Value)
+                IsLastHeartBeatOk = GetAnalysisOfHeartBeat(game.Player, game.HeartBeats.LastOrDefault().Value),
+                SensorId = game.SensorId
             };
 
             return gameData;
@@ -201,7 +203,8 @@ namespace Backend.Core.Services
                     HeartBeatDate = x.HeartBeatDate
                 }).ToList(),
                 PlayerId = game.Player.Id,
-                Analysis = GetAnalysisOfHeartBeats(game)
+                Analysis = GetAnalysisOfHeartBeats(game),
+                SensorId = game.SensorId
             };
 
             return gameData;

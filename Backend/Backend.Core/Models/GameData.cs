@@ -17,5 +17,6 @@ namespace Backend.Core.Models
         public List<HeartBeatData> HeartBeats { get; set; }
         public int PlayerId { get; set; }
         public bool IsLastHeartBeatOk { get; set; }
+        public string SensorId { get; set; }
     }
 }

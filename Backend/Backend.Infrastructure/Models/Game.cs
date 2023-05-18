@@ -16,5 +16,6 @@ namespace Backend.Infrastructure.Models
         public int PlayerId { get; set; }
         public Player Player { get; set; }
         public List<HeartBeat> HeartBeats { get; set; }
+        public string SensorId { get; set; }
     }
 }

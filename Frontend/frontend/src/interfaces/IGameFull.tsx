@@ -17,5 +17,6 @@ export interface IGameFull{
         timesLowerMinimumHeartBeat: number,
         isAverageHigher: boolean,
         isAverageLower: boolean
-    }
+    },
+    sensorId: number,
 }
