@@ -49,49 +49,53 @@ const Game = () => {
     const nav = useNavigate();
     const {id} = useParams();
 
-    useEffect(() => {
-        const getGameData = async () => {
-            const token = localStorage.getItem('access_token_cybersport');
-            if (token && id) {
-                const response = await GetGame(token, +id);
-                if (response === 401) {
-                    const notify = () => toast.error(strings.expired);
-                    notify();
-                    setTimeout(() => nav('/'), 2000);
-                }
-                else if (response) {
-                    setGameData(response);
-                }
-                else {
-                    const notify = () => toast.error(strings.error);
-                    notify();
-                }
-            }
-            else {
+    const getGameData = async () => {
+        const token = localStorage.getItem('access_token_cybersport');
+        if (token && id) {
+            const response = await GetGame(token, +id);
+            if (response === 401) {
                 const notify = () => toast.error(strings.expired);
                 notify();
-                setTimeout(() => {
-                    nav('/');
-                },1000)
+                setTimeout(() => nav('/'), 2000);
+            }
+            else if (response) {
+                setGameData(response);
+            }
+            else {
+                const notify = () => toast.error(strings.error);
+                notify();
             }
         }
-
-        const getTempData = async () => {
-            if (gameData) {
-                const timeZone = "UTC"
-                const startDate = DateTime.fromISO(gameData.gameStartDate, { zone: 'Europe/Kiev' });
-                const convertedStartDate = startDate.setZone(timeZone);
-                const endDate = DateTime.fromISO(gameData.gameEndDate, { zone: 'Europe/Kiev' });
-                const convertedEndDate = endDate.setZone(timeZone);
-                console.log(gameData)
-                const res = await getTemperatureForChart(gameData.sensorId.toString(), "AV9VRNL2O9T3RHI5", convertedStartDate.toISO()!, convertedEndDate!.toISO()!);
-                setTempData(res);
-            }
+        else {
+            const notify = () => toast.error(strings.expired);
+            notify();
+            setTimeout(() => {
+                nav('/');
+            },1000)
         }
+    }
 
+    const getTempData = async () => {
+        if (gameData) {
+            const timeZone = "UTC"
+            const startDate = DateTime.fromISO(gameData.gameStartDate, { zone: 'Europe/Kiev' });
+            const convertedStartDate = startDate.setZone(timeZone);
+            const endDate = DateTime.fromISO(gameData.gameEndDate, { zone: 'Europe/Kiev' });
+            const convertedEndDate = endDate.setZone(timeZone);
+            const res = await getTemperatureForChart(gameData.sensorId.toString(), "AV9VRNL2O9T3RHI5", convertedStartDate.toISO()!, convertedEndDate!.toISO()!);
+            setTempData(res);
+        }
+    }
+
+    useEffect(() => {
         getGameData();
-        getTempData();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (gameData) {
+            getTempData();
+        }
+    }, [gameData]);
 
     return (
         <div>

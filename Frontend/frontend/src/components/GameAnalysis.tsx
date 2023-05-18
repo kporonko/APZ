@@ -11,8 +11,8 @@ const GameAnalysis = (props:{
             avgGood: "The average heartbeat value is within the normal range. Good job!\n",
             avgLow: "The average heartbeat value is below the normal range.\n",
             avgHigh: "The average heartbeat value is above the normal range.\n",
-            avgRangeBad: "The average heartbeat value is not within the normal range.\n",
-            avgRangeGood: "The average heartbeat value is within the normal range.\n",
+            avgRangeBad: "The range heartbeat value is not within the normal range.\n",
+            avgRangeGood: "The range heartbeat value is within the normal range.\n",
             recommendationHeader: "Here are some recommendations for you:\n",
             timesLowerNull: "You have no heartbeat values below the normal range.\n",
             timesLowerExist: "You have had {0} heartbeat values below the normal range.\n",
@@ -76,6 +76,9 @@ const GameAnalysis = (props:{
         }
         else if (lower) {
             text += strings.avgLow;
+        }
+        else {
+            text += strings.avgGood;
         }
         return text;
     }
@@ -182,16 +185,15 @@ const GameAnalysis = (props:{
         return text;
     }
 
-
     return (
         <div>
             <div className={props.game.analysis.isAverageHigher || props.game.analysis.isAverageLower ? "red-bc header-analysis" : "green-bc header-analysis"}>
                 {getIsAvgGoodAnalysis()}
             </div>
             <div>
-                <h3>{props.game.analysis.isAverageLower ? getRandomRecommendationAvgLow().map((item) => (
-                    <ul className={"list-item-recomm"}>
-                        <li>{item}</li>
+                <h3>{props.game.analysis.isAverageLower ? getRandomRecommendationAvgLow().map((item, ind) => (
+                    <ul key={ind} className={"list-item-recomm"}>
+                        <li key={ind}>{item}</li>
                     </ul>
                     )) : props.game.analysis.isAverageHigher ? getRandomRecommendationAvgHigh() : ""}</h3>
             </div>

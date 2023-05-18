@@ -237,8 +237,8 @@ namespace Backend.Core.Services
             var avgValue = game.HeartBeats.Select(x => x.Value).Average();
 
             var maxValue = minHeartBeatForAge + maxIncrease * increaseCoef;
-            var isAvgHigher = avgValue < (minHeartBeatForAge + maxValue) / 2 + maxDeviation * increaseCoef;
-            var isAvgLower = avgValue > minHeartBeatForAge;
+            var isAvgHigher = avgValue > (minHeartBeatForAge + maxValue) / 2 + maxDeviation * increaseCoef;
+            var isAvgLower = avgValue < (minHeartBeatForAge + maxValue) / 2 - maxDeviation * increaseCoef;
 
             var minimum = game.HeartBeats.Select(x => x.Value).Min();
             var maximum = game.HeartBeats.Select(x => x.Value).Max();

@@ -9,11 +9,11 @@ const ChartTemp = (props:{
     game: IGameFull
 }) => {
 
-    let data = props.data;
+
     const userLocale = navigator.language;
 
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-    let formattedData = data.map((item) => ({
+    let formattedData = props.data.map((item) => ({
         ...item,
         created_at: new Date(DateTime.fromISO(item.created_at, { zone: 'UTC', locale: userLocale }).setZone(timeZone).toISO()!).toLocaleString()
     }));
