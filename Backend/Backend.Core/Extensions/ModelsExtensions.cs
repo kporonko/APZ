@@ -55,7 +55,7 @@ namespace Backend.Core.Extensions
                 issuer,
                 audience,
                 claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddMinutes(999),
                 signingCredentials: credentials
                 );
 

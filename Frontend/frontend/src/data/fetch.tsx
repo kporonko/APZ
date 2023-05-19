@@ -9,6 +9,7 @@ import {IGameFull} from "../interfaces/IGameFull";
 
 export const BASE_URL = 'https://localhost:7061/api';
 export const BASE_URL_THINGSPEAK = "https://api.thingspeak.com/"
+export const THINGSPEAK_KEY = "AV9VRNL2O9T3RHI5"
 
 export const loginUser = async (user: ILoginUser) => {
     const response = await fetch(`${BASE_URL}/Auth/manager/login`, {
@@ -296,8 +297,8 @@ export const GetGame = async (token: string, id: number) => {
     }
 }
 
-export const getTemperatureForChart = async (ip: string, key: string, start: string, end: string) => {
-    const response = await fetch(`${BASE_URL_THINGSPEAK}channels/${ip}/feeds.json?api_key=${key}&start=${start}&end=${end}`, {
+export const getTemperatureForChart = async (ip: string, start: string, end: string) => {
+    const response = await fetch(`${BASE_URL_THINGSPEAK}channels/${ip}/feeds.json?api_key=${THINGSPEAK_KEY}&start=${start}&end=${end}`, {
         method: 'GET',
         headers:{
             'Content-Type': 'application/json'
@@ -345,6 +346,82 @@ export const SendGameId = async (token: string, gameId: number) => {
             },
             body: JSON.stringify({
                 id: gameId,
+            })
+        });
+        console.log(response);
+        const res = response.status;
+        return res;
+    }
+    catch (error: any) {
+        console.log(error);
+        return error;
+    }
+}
+
+
+export const GetTempDataCurrentGame = async (ip: string) => {
+    const response = await fetch(`${BASE_URL_THINGSPEAK}channels/${ip}/feeds.json?api_key=${THINGSPEAK_KEY}&results=10`, {
+        method: 'GET',
+        headers:{
+            'Content-Type': 'application/json'
+        }});
+
+    const body = await response.json();
+    const res = body.feeds as ITempDto[];
+    console.log(res)
+    return res;
+}
+
+
+export const GetGameCurrent = async (token: string, id: number) => {
+    try {
+        const response = await fetch(`${BASE_URL}/Game/game/current/${id}`, {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            }});
+
+        if (response.status === 401) {
+            return response.status;
+        }
+        const body = await response.json();
+        const res = body;
+        return res;
+    }
+    catch (error: any) {
+        console.log(error);
+        return error;
+    }
+}
+
+
+export const SubscribeMqtt = async () => {
+    try {
+        const response = await fetch(`${BASE_URL}/Game/heartbeat`, {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+            }
+        });
+    }
+    catch (error: any) {
+        console.log(error);
+        return error;
+    }
+}
+
+
+export const EndGame = async (token: string, gameId: number) => {
+    try {
+        const response = await fetch(`${BASE_URL}/Game/end`, {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            },
+            body: JSON.stringify({
+                gameId: gameId,
             })
         });
         console.log(response);

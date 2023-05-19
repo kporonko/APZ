@@ -8,7 +8,7 @@ import Team from "./pages/Team";
 import Player from "./pages/Player";
 import Game from "./pages/Game";
 import Players from "./pages/Players";
-import GameCurrent from "./components/GameCurrent";
+import GameCurrent from "./pages/GameCurrent";
 
 function App() {
   return (

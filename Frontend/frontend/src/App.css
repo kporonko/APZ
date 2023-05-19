@@ -735,7 +735,7 @@ body{
 }
 
 .red-bc{
-    background: #fd2828;
+    background: #fd2828!important;
 }
 .green-bc{
   background: #0dc70d!important;
@@ -880,6 +880,72 @@ body{
   color: white;
 }
 .absolute-btn-connect-to-iot:hover{
+  cursor: pointer;
+  background: #1e1e1e;
+  transition: 0.5s background-color ease;
+}
+
+.player-card-training-wrapper{
+  margin: 1rem 20rem;
+}
+
+.player-card-image-training{
+  width: 8rem;
+  height: 8rem;
+  border-radius: 20px;
+  border: 1px solid black;
+  object-fit: cover;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
+.player-card-training-current{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+  margin-top: 1rem;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 0.5rem 5rem;
+  background: #4d4c4c;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+
+}
+
+.charts-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.chart-wrapper-current{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 1rem;
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid black;
+}
+
+.end-game-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 20rem;
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid black;
+  background: #4d4c4c;
+  color: white;
+  font-size: 1.5rem;
+  font-family: "Montserrat", Oswald;
+}
+
+.end-game-btn:hover{
   cursor: pointer;
   background: #1e1e1e;
   transition: 0.5s background-color ease;

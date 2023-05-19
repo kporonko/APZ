@@ -83,7 +83,7 @@ const Game = () => {
             const convertedStartDate = startDate.setZone(timeZone);
             const endDate = DateTime.fromISO(gameData.gameEndDate, { zone: 'Europe/Kiev' });
             const convertedEndDate = endDate.setZone(timeZone);
-            const res = await getTemperatureForChart(gameData.sensorId.toString(), "AV9VRNL2O9T3RHI5", convertedStartDate.toISO()!, convertedEndDate!.toISO()!);
+            const res = await getTemperatureForChart(gameData.sensorId.toString(), convertedStartDate.toISO()!, convertedEndDate!.toISO()!);
             setTempData(res);
         }
     }

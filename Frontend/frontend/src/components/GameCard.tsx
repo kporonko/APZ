@@ -30,10 +30,10 @@ const GameCard = (props:{
                     {strings.game}№{props.game.id}
                 </div>
                 <div className="game-card-date">
-                    {strings.from} {new Date(props.game.gameStartDate).toLocaleDateString()}
+                    {strings.from} {new Date(props.game.gameStartDate).toLocaleString()}
                 </div>
                 <div className="game-card-date">
-                    {strings.to} {props.game.gameEndDate && new Date(props.game.gameEndDate).toLocaleDateString()}
+                    {strings.to} {props.game.gameEndDate && new Date(props.game.gameEndDate).toLocaleString()}
                 </div>
                 <div className="heartbeat-circle">
                     {props.game.avgHeartBeat}

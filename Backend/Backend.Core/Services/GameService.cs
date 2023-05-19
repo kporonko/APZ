@@ -28,6 +28,18 @@ namespace Backend.Core.Services
             _configuration = configuration;
         }
 
+        
+        public async Task<string> EndGame(GameEndRequest gameEndRequest)
+        {
+            var game = await _context.Games.FirstOrDefaultAsync(g => g.Id == gameEndRequest.GameId);
+            if (game is null)
+                return "";
+
+            game.GameEndDate = DateTime.Now;
+            await _context.SaveChangesAsync();
+            return game.GameEndDate.ToString();
+        }
+
         public async Task<HttpStatusCode> AddHeartBeat()
         {
             var mqttFactory = new MqttFactory();
@@ -48,15 +60,20 @@ namespace Backend.Core.Services
                     var a = System.Text.Encoding.Default.GetString(e.ApplicationMessage.Payload);
                     HeartBeatAddRequest heartbeat = JsonConvert.DeserializeObject<HeartBeatAddRequest>(a);
 
-                    HeartBeat hb = new HeartBeat
+                    var game = _context.Games.FirstOrDefault(x => x.Id == heartbeat.GameId);
+                    if (game.GameEndDate is null)
                     {
-                        Value = heartbeat.Value,
-                        GameId = heartbeat.GameId,
-                        HeartBeatDate = DateTime.Now
-                    };
+                        HeartBeat hb = new HeartBeat
+                        {
+                            Value = heartbeat.Value,
+                            GameId = heartbeat.GameId,
+                            HeartBeatDate = DateTime.Now
+                        };
 
-                    _context.HeartBeats.Add(hb);
-                    _context.SaveChanges();
+                        _context.HeartBeats.Add(hb);
+                        _context.SaveChanges();
+                    }
+
                     return Task.CompletedTask;
                 };
                 
@@ -120,7 +137,7 @@ namespace Backend.Core.Services
                     GameStartDate = x.GameStartDate,
                     GameEndDate = x.GameEndDate,
                     AvgHeartBeat = x.HeartBeats.Count > 0 ? (int)x.HeartBeats.Select(x => x.Value).Average() : null
-                }).ToList()
+                }).OrderByDescending(x => x.GameStartDate).ToList()
             };
             return gamesData;
         }
@@ -184,7 +201,7 @@ namespace Backend.Core.Services
                     HeartBeatDate = x.HeartBeatDate
                 }).ToList(),
                 PlayerId = game.Player.Id,
-                IsLastHeartBeatOk = GetAnalysisOfHeartBeat(game.Player, game.HeartBeats.LastOrDefault().Value),
+                IsLastHeartBeatOk = game.HeartBeats.Count == 0 ? true : GetAnalysisOfHeartBeat(game.Player, game.HeartBeats.LastOrDefault().Value),
                 SensorId = game.SensorId
             };
 

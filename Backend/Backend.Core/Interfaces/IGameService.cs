@@ -15,5 +15,6 @@ namespace Backend.Core.Interfaces
         public Task<GameData> GetGameStats(int gameId);
         public Task<GameAnalysisData> GetGameAnalysisStats(int gameId);
         public Task<GameBaseResponse> GetGames(int playerId);
+        public Task<string> EndGame(GameEndRequest gameEndRequest);
     }
 }

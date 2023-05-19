@@ -1,36 +1,31 @@
 import React from 'react';
-import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from "recharts";
 import {ITempDto} from "../interfaces/ITempDto";
-import {IGameFull} from "../interfaces/IGameFull";
 import {DateTime} from "luxon";
+import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from "recharts";
 
-const ChartTemp = (props:{
-    data: ITempDto[],
-    game: IGameFull
+const ChartTemperatureCurrent = (props:{
+    tempData: ITempDto[]
 }) => {
-
 
     const userLocale = navigator.language;
 
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-    let formattedData = props.data.map((item) => ({
+    let formattedData = props.tempData.map((item) => ({
         ...item,
         created_at: new Date(DateTime.fromISO(item.created_at, { zone: 'UTC', locale: userLocale }).setZone(timeZone).toISO()!).toLocaleString()
     }));
 
-
-    formattedData.filter((item) => {
-        return new Date(item.created_at!) > new Date(props.game.gameStartDate) && new Date(item.created_at!) < new Date(props.game.gameEndDate);
-    })
-
+    // formattedData.filter((item) => {
+    //     return new Date(item.created_at!) > new Date(props.game.gameStartDate) && new Date(item.created_at!) < new Date(props.game.gameEndDate);
+    // })
 
     return (
-        <div className={"chart-wrapper"}>
+        <div className={"chart-wrapper-current"}>
             <LineChart
-                width={1400}
-                height={600}
+                width={450}
+                height={400}
                 data={formattedData}
-                margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
+                margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
             >
                 <XAxis dataKey="created_at" />
                 <YAxis type={"number"}/>
@@ -44,4 +39,4 @@ const ChartTemp = (props:{
     );
 };
 
-export default ChartTemp;
+export default ChartTemperatureCurrent;

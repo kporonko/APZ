@@ -60,6 +60,18 @@ namespace Backend.API.Controllers
             return BadRequest();
         }
 
+        [Authorize(Roles = "Manager")]
+        [HttpPost("end")]
+        public async Task<ActionResult<GameCreateResponse>> EndGame(GameEndRequest gameEnd)
+        {
+            var result = await _gameService.EndGame(gameEnd);
+            if (result is not null)
+                return Ok(result);
+
+            return BadRequest();
+        }
+
+
         [HttpPost("gameid")]
         public async Task<IActionResult> AddGameId(GameId gameIdRequest)
         {
