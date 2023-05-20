@@ -9,7 +9,7 @@ import {useNavigate} from "react-router";
 const ModalCreateTraining = (props:{
     setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>,
     players: IPlayerShort[],
-    setPlayers: React.Dispatch<React.SetStateAction<IPlayerShort[]>>,
+    setPlayers: React.Dispatch<React.SetStateAction<IPlayerShort[]|undefined>>,
 }) => {
 
     const strings = new LocalizedStrings({

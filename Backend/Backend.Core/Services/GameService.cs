@@ -122,7 +122,18 @@ namespace Backend.Core.Services
 
         public async Task<GameBaseResponse> GetGames(int playerId)
         {
-            var player = await _context.Players.Include(x => x.Games).ThenInclude(x => x.HeartBeats).FirstOrDefaultAsync(x => x.Id == playerId);
+            //var player = await _context.Players.Include(x => x.Games).ThenInclude(x => x.HeartBeats).FirstOrDefaultAsync(x => x.Id == playerId);
+
+            var player = await _context.Players.FirstOrDefaultAsync(x => x.Id == playerId);
+
+            if (player != null)
+            {
+                 _context.Entry(player)
+                    .Collection(x => x.Games)
+                    .Query()
+                    .Include(x => x.HeartBeats)
+                    .Load();
+            }
             if (player == null)
                 return null;
 
@@ -185,7 +196,21 @@ namespace Backend.Core.Services
 
         public async Task<GameData> GetGameStats(int gameId)
         {
-            var game = await _context.Games.Include(x => x.Player).Include(x => x.HeartBeats).FirstOrDefaultAsync(x => x.Id == gameId);
+            //var game = await _context.Games.Include(x => x.Player).Include(x => x.HeartBeats).FirstOrDefaultAsync(x => x.Id == gameId);
+
+            var game = await _context.Games.FirstOrDefaultAsync(x => x.Id == gameId);
+
+            if (game != null)
+            {
+                 _context.Entry(game)
+                    .Reference(x => x.Player)
+                    .Load();
+
+                 _context.Entry(game)
+                    .Collection(x => x.HeartBeats)
+                    .Load();
+            }
+
             if (game == null)
                 return null;
 
@@ -199,7 +224,7 @@ namespace Backend.Core.Services
                 {
                     Value = x.Value,
                     HeartBeatDate = x.HeartBeatDate
-                }).ToList(),
+                }).TakeLast(10).ToList(),
                 PlayerId = game.Player.Id,
                 IsLastHeartBeatOk = game.HeartBeats.Count == 0 ? true : GetAnalysisOfHeartBeat(game.Player, game.HeartBeats.LastOrDefault().Value),
                 SensorId = game.SensorId

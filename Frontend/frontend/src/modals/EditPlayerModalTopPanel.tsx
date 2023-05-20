@@ -16,7 +16,7 @@ const EditPlayerModalTopPanel = (props:{
         en:{
             cancel:"Cancel",
             add:"Edit Player",
-            team:"Player",
+            team:"Save",
             success:'Player edited successfully',
             error:'Error editing player',
             fillAllFields:'Please fill all fields',
@@ -25,7 +25,7 @@ const EditPlayerModalTopPanel = (props:{
         ru: {
             cancel: "Скасувати",
             add: "Оновити гравця",
-            team: "Оновити",
+            team: "Зберегти",
             success:'Гравця успішно оновлено',
             error:'Помилка оновлення гравця',
             fillAllFields:'Будь ласка, заповніть всі поля',

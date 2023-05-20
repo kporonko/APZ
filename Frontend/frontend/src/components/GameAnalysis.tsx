@@ -192,11 +192,11 @@ const GameAnalysis = (props:{
                 {getIsAvgGoodAnalysis()}
             </div>
             <div>
-                <h3>{props.game.analysis.isAverageLower ? getRandomRecommendationAvgLow().map((item, ind) => (
+                <h3>{props.game.analysis.isAverageLower || props.game.analysis.isAverageHigher ? getRandomRecommendationAvgLow().map((item, ind) => (
                     <ul key={ind} className={"list-item-recomm"}>
                         <li key={ind}>{item}</li>
                     </ul>
-                    )) : props.game.analysis.isAverageHigher ? getRandomRecommendationAvgHigh() : ""}</h3>
+                    )) : ""}</h3>
             </div>
             <div className={props.game.analysis.isRangeGood ? "green-bc header-analysis" : "red-bc header-analysis"}>
                 {getIsRangeGoodAnalysis()}

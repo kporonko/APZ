@@ -359,8 +359,9 @@ export const SendGameId = async (token: string, gameId: number) => {
 }
 
 
-export const GetTempDataCurrentGame = async (ip: string) => {
-    const response = await fetch(`${BASE_URL_THINGSPEAK}channels/${ip}/feeds.json?api_key=${THINGSPEAK_KEY}&results=10`, {
+export const GetTempDataCurrentGame = async (ip: string, start: string) => {
+    console.log(ip, start);
+    const response = await fetch(`${BASE_URL_THINGSPEAK}channels/${ip}/feeds.json?api_key=${THINGSPEAK_KEY}&results=10&start=s${start}`, {
         method: 'GET',
         headers:{
             'Content-Type': 'application/json'

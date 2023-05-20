@@ -228,10 +228,16 @@ body{
 
 .create-team-button{
   padding: 20px 50px;
-  background: green;
+  background: #07b907;
   border-radius: 30px;
   font-family: "Montserrat", Oswald;
   font-size: 1rem;
+  color: white;
+}
+.create-team-button:hover{
+  background: #067306;
+  cursor: pointer;
+  transition: all 0.7s ease;
 }
 
 .modal-add-post-wrapper{
@@ -272,21 +278,21 @@ body{
   font-family: "Montserrat", sans-serif;
 }
 .modal-add-post-top-panel-header{
-  color: yellow;
+  color: #000000;
   font-size: 1.3rem;
   font-family: "Montserrat", sans-serif;
 }
 
 .modal-add-post-top-panel-text:first-child:hover{
   cursor: pointer;
-  color: yellow;
+  color: #f80a2d;
   background: white;
   border-radius: 20px 0 0 0;
   transition: 0.5s background-color ease;
 }
 .modal-add-post-top-panel-text:last-child:hover{
   cursor: pointer;
-  color: yellow;
+  color: #4df60f;
   background: white;
   border-radius: 0 20px 0 0;
   transition: 0.5s background-color ease;
@@ -514,6 +520,7 @@ body{
 .player-image{
     border-radius: 40px;
     object-fit: cover;
+    width: 40rem;
 }
 
 .player-info-wrapper{

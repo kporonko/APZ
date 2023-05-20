@@ -10,10 +10,11 @@ import ModalAddPlayer from "../modals/ModalAddPlayer";
 import ModalUpdateTeam from "../modals/ModalUpdateTeam";
 import LocalizedStrings from "react-localization";
 import ModalCreateTraining from "../modals/ModalCreateTraining";
+import ServerError from "../components/ServerError";
 
 const Players = () => {
 
-    const [players, setPlayers] = React.useState<IPlayerShort[]>([]);
+    const [players, setPlayers] = React.useState<IPlayerShort[]|undefined>(undefined);
 
     const nav = useNavigate();
 
@@ -60,6 +61,7 @@ const Players = () => {
         getPlayers();
     }, [toggleChange]);
 
+    console.log(players);
     return (
         <div>
             <div className={modalAddPlayer || isOpenAddTraining ? "content-while-active-modal" : ""}>
@@ -71,7 +73,7 @@ const Players = () => {
                     <div onClick={() => setModalAddPlayer(true)} className={"add-player-button"}>
                         {strings.addPlayer}
                     </div>
-                    {players.length > 0 && <div className='nav-element'>
+                    {players && players.length > 0 && <div className='nav-element'>
                         <div
                             className='create-game-btn'
                             onClick={() => {setIsOpenAddTraining(true)}}
@@ -80,14 +82,14 @@ const Players = () => {
                         </div>
                     </div>}
                     <div className={"players-cards-wrapper"}>
-                        {players.length > 0 ? players.map((player, ind) => (
+                        {!players ? <ServerError/> : players.length > 0 ? players.map((player, ind) => (
                             <PlayerCard key={ind} player={player}/>
                         )) : <NoPlayers/>}
                     </div>
                 </div>
             </div>
-            {modalAddPlayer && <ModalAddPlayer setToggleChange={setToggleChange} toggleChange={toggleChange} setModalAddPlayer={setModalAddPlayer}/>}
-            {isOpenAddTraining && <ModalCreateTraining setPlayers={setPlayers} players={players} setIsOpenModal={setIsOpenAddTraining}/>}
+            {players && modalAddPlayer && <ModalAddPlayer setToggleChange={setToggleChange} toggleChange={toggleChange} setModalAddPlayer={setModalAddPlayer}/>}
+            {players && isOpenAddTraining && <ModalCreateTraining setPlayers={setPlayers} players={players} setIsOpenModal={setIsOpenAddTraining}/>}
             <ToastContainer/>
         </div>
     );

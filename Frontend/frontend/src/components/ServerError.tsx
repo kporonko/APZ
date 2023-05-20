@@ -4,10 +4,10 @@ import LocalizedStrings from "react-localization";
 const ServerError = () => {
     const strings = new LocalizedStrings({
         en:{
-            error: "Server error",
+            error: "Loading...",
         },
         ru: {
-            error: "Помилка сервера",
+            error: "Загрузка...",
         }
     })
 

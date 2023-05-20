@@ -20,6 +20,7 @@ const GameCurrent = () => {
     console.log("players");
     console.log(players);
 
+
     const strings = new LocalizedStrings({
         en: {
             game: 'Game',

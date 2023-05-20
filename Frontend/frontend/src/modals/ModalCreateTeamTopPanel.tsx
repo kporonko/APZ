@@ -15,7 +15,7 @@ const ModalCreateTeamTopPanel = (props:{
         en:{
             cancel:"Cancel",
             add:"Create Team",
-            team:"Team",
+            team:"Save",
             success:'Team created successfully',
             error:'Error creating team',
             fillAllFields:'Please fill all fields',
@@ -24,7 +24,7 @@ const ModalCreateTeamTopPanel = (props:{
         ru: {
             cancel: "Скасувати",
             add: "Створити команду",
-            team: "Створити",
+            team: "Зберегти",
             success:'Команду успішно створено',
             error:'Помилка створення команди',
             fillAllFields:'Будь ласка, заповніть всі поля',

@@ -15,7 +15,7 @@ const ModalAddPlayerTopPanel = (props:{
         en:{
             cancel:"Cancel",
             add:"Add Player",
-            team:"Player",
+            team:"Save",
             success:'Player added successfully',
             error:'Error creating player',
             fillAllFields:'Please fill all fields',
@@ -24,7 +24,7 @@ const ModalAddPlayerTopPanel = (props:{
         ru: {
             cancel: "Скасувати",
             add: "Створити гравця",
-            team: "Додати",
+            team: "Зберегти",
             success:'Гравця успішно створено',
             error:'Помилка додавання гравця',
             fillAllFields:'Будь ласка, заповніть всі поля',
