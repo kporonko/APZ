@@ -135,6 +135,7 @@ namespace Backend.Core.Services
                     IsPlayerAbsent = x.IsPlayerAbsent,
                     GameStartDate = x.GameStartDate,
                     GameEndDate = x.GameEndDate,
+                    SensorId = x.SensorId,
                     HeartBeats = x.HeartBeats.Select(x => new HeartBeatData
                     {
                         Value = x.Value,

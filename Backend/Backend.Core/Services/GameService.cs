@@ -174,16 +174,18 @@ namespace Backend.Core.Services
                     return (null, null);
                 }
                 var avgValue = game.HeartBeats.Select(x => x.Value).Average();
-                var isAvgGood = avgValue < minimumBeatForAge + maxDeviation * increaseCoef;
 
-                if (!isAvgGood)
+                var maxValue = minimumBeatForAge + maxIncrease * increaseCoef;
+                var isAvgHigher = avgValue > (minimumBeatForAge + maxValue) / 2 + maxDeviation * increaseCoef;
+                var isAvgLower = avgValue < (minimumBeatForAge + maxValue) / 2 - maxDeviation * increaseCoef;
+                if (isAvgHigher || isAvgLower)
                 {
                     badAverageInRowCount++;
                 }
 
                 var minimum = game.HeartBeats.Select(x => x.Value).Min();
                 var maximum = game.HeartBeats.Select(x => x.Value).Max();
-                var isRangeGood = maximum - minimum < maxIncrease * increaseCoef;
+                var isRangeGood = maximum - minimum < maxDeviation * increaseCoef;
 
                 if (!isRangeGood)
                 {
