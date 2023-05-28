@@ -7,7 +7,7 @@ import {ITempDto} from "../interfaces/ITempDto";
 import {IGame} from "../interfaces/IGame";
 import {IGameFull} from "../interfaces/IGameFull";
 
-export const BASE_URL = 'https://localhost:7061/api';
+export const BASE_URL = 'http://localhost:5052/api';
 export const BASE_URL_THINGSPEAK = "https://api.thingspeak.com/"
 export const THINGSPEAK_KEY = "AV9VRNL2O9T3RHI5"
 

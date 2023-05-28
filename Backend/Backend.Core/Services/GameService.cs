@@ -269,6 +269,11 @@ namespace Backend.Core.Services
             var maxIncrease = GetMaxIncrease();
             var maxDeviation = GetMaxDeviation();
 
+            if (game.HeartBeats.Count == 0)
+            {
+                return null;
+            }
+
             var analysis = GetAnalysisOfGame(game, minimumBeatForAge, increaseCoef, maxIncrease, maxDeviation);
 
             return new AnalysisData

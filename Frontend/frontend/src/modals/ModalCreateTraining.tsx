@@ -2,7 +2,7 @@ import React from 'react';
 import {IPlayerShort} from "../interfaces/IPlayerShort";
 import ModalCreateGameContent from "./ModalCreateTrainingContent";
 import {IPlayerForTraining} from "../interfaces/IPlayerForTraining";
-import {ToastContainer} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import LocalizedStrings from "react-localization";
 import {useNavigate} from "react-router";
 
@@ -26,7 +26,10 @@ const ModalCreateTraining = (props:{
     })
     const closeModal = (e:any) => {
         e.stopPropagation()
-        props.setIsOpenModal(false)
+
+        if (!players.some((player) => player.isPresent)) {
+            props.setIsOpenModal(false)
+        }
     }
 
     const navigate = useNavigate()
@@ -45,6 +48,7 @@ const ModalCreateTraining = (props:{
     }
 
     const [players, setPlayers] = React.useState<IPlayerForTraining[]>(props.players as IPlayerForTraining[])
+
 
     return (
         <div onClick={(e) => closeModal(e)} className={'modal-add-post-wrapper'}>
