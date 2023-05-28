@@ -28,6 +28,10 @@ const PlayerTrainingCard = (props:{
             alreadyConnected: 'Вже підключено',
         }
     })
+
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     const [player, setPlayer] = React.useState<IPlayerForTraining>(props.player)
 
     const handleConnectToIoT = async () => {

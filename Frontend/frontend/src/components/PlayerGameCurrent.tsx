@@ -30,6 +30,9 @@ const PlayerGameCurrent = (props:{
         }
     })
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     useEffect(() => {
 
         // const callSubscribeToMqtt = async () => {

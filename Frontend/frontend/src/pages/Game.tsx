@@ -47,6 +47,9 @@ const Game = () => {
         }
     })
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     const nav = useNavigate();
     const {id} = useParams();
 

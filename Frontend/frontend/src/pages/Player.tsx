@@ -57,6 +57,10 @@ const Player = () => {
             failedDelete:"Не вдалося видалити гравця!"
         }
     })
+
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     useEffect(() => {
         const getPlayer = async () => {
             const token = localStorage.getItem("access_token_cybersport");

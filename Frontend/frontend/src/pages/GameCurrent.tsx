@@ -42,6 +42,9 @@ const GameCurrent = () => {
         }
     })
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     const nav = useNavigate();
 
     const handleEndGame = async (e: React.MouseEvent<HTMLDivElement>) => {

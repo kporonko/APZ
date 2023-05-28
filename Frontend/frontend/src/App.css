@@ -957,3 +957,18 @@ body{
   background: #1e1e1e;
   transition: 0.5s background-color ease;
 }
+
+.absolute-lang{
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 1rem;
+  font-size: 24px;
+    font-family: "Montserrat", Oswald;
+  cursor: pointer;
+}
+.absolute-lang>div:hover{
+  color: #c71717;
+  transition: 0.5s color ease;
+}

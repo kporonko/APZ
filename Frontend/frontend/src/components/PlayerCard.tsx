@@ -15,6 +15,10 @@ const PlayerCard = (props:{
             noData: 'Немає даних',
         }
     })
+
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     return (
         <Link to={`/player/${props.player.id}`} className={"player-card"}>
             <img className={"player-card-image"} src={props.player.avatar} alt=""/>

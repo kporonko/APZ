@@ -12,6 +12,9 @@ const NoPlayers = () => {
         }
     });
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     return (
         <div className={"no-players"}>
             {strings.noPlayers}

@@ -35,6 +35,9 @@ const LoginForm = () => {
         }
     });
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(login, password);

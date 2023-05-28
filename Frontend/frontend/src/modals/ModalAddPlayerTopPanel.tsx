@@ -31,6 +31,10 @@ const ModalAddPlayerTopPanel = (props:{
             expired:"Ваша сесія закінчилася. Будь ласка, увійдіть знову.",
         }
     });
+
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     const nav = useNavigate();
 
     const handleAddPost = async () => {

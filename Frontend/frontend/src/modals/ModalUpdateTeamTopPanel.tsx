@@ -32,6 +32,9 @@ const ModalUpdateTeamTopPanel = (props:{
         }
     });
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     const nav = useNavigate();
 
     const handleUpdateTeam = async () => {

@@ -37,6 +37,9 @@ const Players = () => {
         }
     })
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     useEffect(() => {
         const getPlayers = async () => {
             const token = localStorage.getItem("access_token_cybersport");

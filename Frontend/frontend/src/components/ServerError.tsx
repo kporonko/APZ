@@ -11,6 +11,9 @@ const ServerError = () => {
         }
     })
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     return (
         <div>
             <h1 className={"error-server"}>{strings.error}</h1>

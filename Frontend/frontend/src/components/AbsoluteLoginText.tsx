@@ -14,6 +14,9 @@ const AbsoluteLoginText = () => {
         }
     });
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     return (
         <div>
             <span className='main-header-login'>{strings.header}</span>

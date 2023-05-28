@@ -20,6 +20,9 @@ const ModalCreateTeamContent = (props:{
         }
     });
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     const fileInput = useRef<HTMLInputElement>(null);
     const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
 

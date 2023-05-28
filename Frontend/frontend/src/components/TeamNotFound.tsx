@@ -15,6 +15,9 @@ const TeamNotFound = (props:{
         }
     });
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     return (
         <div className={"team-not-found-wrapper"}>
             <h1>{strings.teamNotFound}</h1>

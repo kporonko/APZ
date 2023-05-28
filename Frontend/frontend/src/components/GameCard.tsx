@@ -20,6 +20,10 @@ const GameCard = (props:{
         }
 
     })
+
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     return (
         <Link className="game-card-wrapper" to={`/game/${props.game.id}`}>
             <div>

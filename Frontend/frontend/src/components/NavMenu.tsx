@@ -18,6 +18,23 @@ const NavMenu = (props:{indexActive: number}) => {
         }
     });
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+    const handleEn = () => {
+        console.log("en");
+        strings.setLanguage('en')
+        localStorage.setItem('language', 'en')
+        window.location.reload();
+    }
+
+    const handleUa = () => {
+        console.log("ru");
+        strings.setLanguage('ru')
+        localStorage.setItem('language', 'ru')
+        window.location.reload();
+
+    }
+
     return (
         <div className="nav-wrapper">
             <Link to={'/team'} className='icon'>
@@ -35,6 +52,10 @@ const NavMenu = (props:{indexActive: number}) => {
                         <h2 className={`nav-link-text ${props.indexActive === 1 && 'active-page'}`}>{strings.players}</h2>
                     </Link>
                 </div>
+            </div>
+            <div className="absolute-lang">
+                <div onClick={handleEn}>En</div>
+                <div onClick={handleUa}>Ua</div>
             </div>
         </div>
     );

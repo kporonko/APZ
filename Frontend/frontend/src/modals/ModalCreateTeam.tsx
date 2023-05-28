@@ -23,6 +23,7 @@ const ModalCreateTeam = (props:{
     });
 
 
+
     return (
         <div onClick={(e) => closeModal(e)} className={'modal-add-post-wrapper'}>
             <div onClick={(e) => e.stopPropagation()} className="modal-add-post-content-with-panel">

@@ -27,6 +27,9 @@ const Team = () => {
         }
     });
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     const nav = useNavigate();
 
     useEffect(() => {

@@ -11,6 +11,9 @@ const Loader = () => {
         }
     });
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     return (
         <div>
             {strings.loading}

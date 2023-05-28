@@ -65,6 +65,9 @@ const GameAnalysis = (props:{
         }
     })
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     const getIsAvgGoodAnalysis = () => {
         let higher = props.game.analysis.isAverageHigher;
         let lower = props.game.analysis.isAverageLower;

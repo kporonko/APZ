@@ -42,6 +42,9 @@ const TeamComponent = (props:{
         }
     });
 
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     const handleDelete = async (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault()
         confirmAlert({

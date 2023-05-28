@@ -24,6 +24,10 @@ const ModalCreateTraining = (props:{
             team: "Створити",
         }
     })
+
+    const lang = localStorage.getItem('language') || 'en';
+    strings.setLanguage(lang);
+
     const closeModal = (e:any) => {
         e.stopPropagation()
 
